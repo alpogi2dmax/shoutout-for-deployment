@@ -27,7 +27,7 @@ with app.app_context():
         last_name='Yagami',
         profile_pic='https://i.imgur.com/q4IgIRx.png'
     )
-    # user1.password_hash = 'password'
+    user1.password_hash = 'password'
     users.append(user1)
     user2 = User(
         username='roronoazoro',
@@ -36,7 +36,7 @@ with app.app_context():
         last_name='Zoro',
         profile_pic='https://i.imgur.com/XcxCRIW.png'
     )
-    # user2.password_hash = 'password'
+    user2.password_hash = 'password'
     users.append(user2)
     user3 = User(
         username='leviackerman',
@@ -45,7 +45,7 @@ with app.app_context():
         last_name='Ackerman',
         profile_pic='https://i.imgur.com/Bfqji06.png'
     )
-    # user3.password_hash = 'password'
+    user3.password_hash = 'password'
     users.append(user3)
     user4 = User(
         username='edwardelric',
@@ -54,7 +54,7 @@ with app.app_context():
         last_name='Elric',
         profile_pic='https://i.imgur.com/Tf2jQQV.png'
     )
-    # user4.password_hash = 'password'
+    user4.password_hash = 'password'
     users.append(user4)
     user5 = User(
         username='gojosatoru',
@@ -63,7 +63,7 @@ with app.app_context():
         last_name='Satoru',
         profile_pic='https://i.imgur.com/qRfUCpd.png'
     )
-    # user5.password_hash = 'password'
+    user5.password_hash = 'password'
     users.append(user5)
     user6 = User(
         username='josephjoestar',
@@ -72,7 +72,7 @@ with app.app_context():
         last_name='Joestar',
         profile_pic='https://i.imgur.com/U44ASCB.png'
     )
-    # user6.password_hash = 'password'
+    user6.password_hash = 'password'
     users.append(user6)
     user7 = User(
         username='monkeydluffy',
@@ -81,7 +81,7 @@ with app.app_context():
         last_name='Luffy',
         profile_pic='https://i.imgur.com/JrCXyOZ.png'
     )
-    # user7.password_hash = 'password'
+    user7.password_hash = 'password'
     users.append(user7)
     user8 = User(
         username='arsenelupiniii',
@@ -90,7 +90,7 @@ with app.app_context():
         last_name='Lupin III',
         profile_pic='https://i.imgur.com/R6497xl.png'
     )
-    # user8.password_hash = 'password'
+    user8.password_hash = 'password'
     users.append(user8)
     user9 = User(
         username='kenshinhimura',
@@ -99,7 +99,7 @@ with app.app_context():
         last_name='Himura',
         profile_pic='https://i.imgur.com/0Mq5J1u.png'
     )
-    # user9.password_hash = 'password'
+    user9.password_hash = 'password'
     users.append(user9)
     user10 = User(
         username='spikespiegel',
@@ -108,7 +108,7 @@ with app.app_context():
         last_name='Spiegel',
         profile_pic='https://i.imgur.com/DBYghZ8.png'
     )
-    # user10.password_hash = 'password'
+    user10.password_hash = 'password'
     users.append(user10)
     db.session.add_all(users)
 
