@@ -3,7 +3,7 @@ from datetime import datetime
 
 from app import app
 # from models import db, Bird
-from models import db, User, Comment, Reply
+from models import db, User, Comment, Reply, Like
 
 with app.app_context():
 
@@ -213,6 +213,16 @@ with app.app_context():
     )
     replies.append(reply1)
     db.session.add_all(replies)
+
+    print("Seeding likes...")
+    likes = []
+    like1 = Like(
+        created_date=datetime.now(),
+        comment_liker_id = 2,
+        liked_comment_id = 1
+    )
+    likes.append(like1)
+    db.session.add_all(likes)
 
     print('Committing transaction...')
     db.session.commit()

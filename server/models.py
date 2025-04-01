@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
 
@@ -19,7 +20,7 @@ from config import db, bcrypt, ma
 #     def __repr__(self):
 #         return f'<Bird {self.name} | Species: {self.species}>'
     
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -51,6 +52,9 @@ class User(db.Model, SerializerMixin):
     #add relationship with replies
     replies = db.relationship('Reply', back_populates='replier', cascade='all, delete-orphan')
 
+    #add relationship with comment via likes
+    likes = db.relationship('Like', back_populates='comment_liker', cascade='all, delete-orphan')
+    liked_comments = association_proxy('likes', 'liked_comment')
 
 
 class Comment(db.Model):
@@ -67,6 +71,9 @@ class Comment(db.Model):
     #add relationship with replies
     replies = db.relationship('Reply', back_populates='comment', cascade='all, delete-orphan')
 
+    #many to many relationship with User via likes
+    likes = db.relationship('Like', back_populates='liked_comment', cascade='all, delete-orphan')
+    comment_likers = association_proxy('likes', 'comment_liker')
 
 class Reply(db.Model):
     __tablename__ = 'replies'
@@ -93,6 +100,19 @@ class Reply(db.Model):
     #     if len(replies) < 1 or len(replies) > 145:
     #         raise ValueError('replies cannot be blank and cannot be more than 145 characters')
     #     return replies
+
+class Like(db.Model):
+    __tablename__ = "likes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_date = db.Column(db.DateTime)
+
+    #add relationships:
+    comment_liker_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    liked_comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
+
+    comment_liker = db.relationship('User', back_populates='likes')
+    liked_comment = db.relationship('Comment', back_populates='likes')
     
 
 class UserSchema(ma.SQLAlchemySchema):
@@ -143,7 +163,6 @@ class UserSchema(ma.SQLAlchemySchema):
     #     # Concatenate the fields into a single search string
     #     return f"{user.username} {user.email} {user.first_name} {user.last_name}".lower()
 
-
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
@@ -159,7 +178,7 @@ class CommentSchema(ma.SQLAlchemySchema):
     # replies = ma.Nested(lambda: ReplySchema, many=True, only=('id', 'reply', 'created_date', 'user'))
     replies = ma.Method("get_replies")
     # comment_likers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name'))
-    # likes = ma.Nested(lambda: LikeSchema, many=True, only=('id', 'comment_liker'))
+    likes = ma.Nested(lambda: LikeSchema, many=True, only=('id', 'comment_liker'))
 
     url = ma.Hyperlinks(
         {
@@ -204,3 +223,25 @@ class ReplySchema(ma.SQLAlchemySchema):
 
 reply_schema = ReplySchema()
 replies_schema = ReplySchema(many=True)
+
+class LikeSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Like
+        load_instance = True
+
+    id = ma.auto_field()
+    created_date = ma.auto_field()
+    comment_liker = ma.Nested(lambda: UserSchema, only=('id', 'first_name', 'last_name'))
+    liked_comment = ma.Nested(lambda: CommentSchema, only=('id', 'comment', 'created_date'))
+
+    url = ma.Hyperlinks(
+        {
+            "self": ma.URLFor(
+                "likesbyid",
+                values=dict(id="<id>")),
+            "collection": ma.URLFor("likes"),
+        }
+    )
+
+like_schema = LikeSchema()
+likes_schema = LikeSchema(many=True)
