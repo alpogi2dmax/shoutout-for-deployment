@@ -8,17 +8,21 @@ from flask_restful import Api, Resource
 
 # from models import db, Bird
 
-from models import db, User
+from config import app, db, api
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+from models import User
 
-migrate = Migrate(app, db)
-db.init_app(app)
 
-api = Api(app)
+
+# app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.json.compact = False
+
+# migrate = Migrate(app, db)
+# db.init_app(app)
+
+# api = Api(app)
 
 # class Birds(Resource):
 
@@ -27,6 +31,10 @@ api = Api(app)
 #         return make_response(jsonify(birds), 200)
 
 # api.add_resource(Birds, '/birds')
+
+@app.route('/')
+def index():
+    return '<h1>Shoutout Server</h1>'
 
 class Users(Resource):
 
