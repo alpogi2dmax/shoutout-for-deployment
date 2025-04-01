@@ -35,3 +35,17 @@ class Users(Resource):
         return make_response(jsonify(users), 200)
 
 api.add_resource(Users, '/users')
+
+# class BirdByID(Resource):
+#     def get(self, id):
+#         bird = Bird.query.filter_by(id=id).first().to_dict()
+#         return make_response(jsonify(bird), 200)
+
+# api.add_resource(BirdByID, '/birds/<int:id>')
+
+class UserByID(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first().to_dict()
+        return make_response(jsonify(user), 200)
+
+api.add_resource(UserByID, '/users/<int:id>')
