@@ -2,15 +2,16 @@
 
 import os
 
-from flask import jsonify, make_response
+from flask import jsonify, make_response, request, session
 # from flask_migrate import Migrate
 from flask_restful import Resource
+from datetime import datetime
 
 # from models import db, Bird
 
 from config import app, db, api
 
-from models import User, user_schema, users_schema
+from models import User, Comment, user_schema, users_schema, comment_schema, comments_schema
 
 
 
@@ -68,3 +69,74 @@ class UsersByID(Resource):
         return response
 
 api.add_resource(UsersByID, '/users/<int:id>')
+
+class Comments(Resource):
+
+    # def get(self):
+
+    #     user = User.query.filter_by(id=session['user_id']).first()
+    #     comments = Comment.query.order_by(Comment.created_date.desc()).all()
+    #     user_followed = [followed.id for followed in user.followed]
+    #     user_followed.append(user.id)
+    #     filtered_comments = [comment for comment in comments if comment.commenter.id in user_followed]
+    #     # comments = Comment.query.all()
+    #     response = comments_schema.dump(filtered_comments), 200
+    #     return response
+    
+    def get(self):
+
+        comments = Comment.query.all()
+        response = comments_schema.dump(comments), 200
+        return response
+    
+    # def post(self):
+    #     try:
+    #         data = request.get_json()
+    #         comment = Comment(
+    #             comment = data['comment'],
+    #             commenter_id = data['commenter_id']
+    #         )
+    #         comment.created_date = datetime.now()
+    #         db.session.add(comment)
+    #         db.session.commit()
+    #         response = make_response(comment_schema.dump(comment), 201)
+    #         return response
+    #     except Exception as e:
+    #         response_body = {'errors': [str(e)]}
+    #         return response_body, 400
+
+api.add_resource(Comments,'/comments')
+
+class CommentsByID(Resource):
+
+    def get(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        response = comment_schema.dump(comment), 200
+        return  response
+    
+    # def patch(self, id):
+    #     comment = Comment.query.filter_by(id=id).first()
+    #     data = request.get_json()
+    #     if comment:
+    #         for attr, value, in data.items():
+    #             setattr(comment, attr, value)
+    #         db.session.add(comment)
+    #         db.session.commit()
+    #         response = make_response(comment_schema.dump(comment), 202)
+    #         return response
+    #     else:
+    #         response_body = {'error': 'Comment not found'}
+    #         return response_body, 404
+        
+    # def delete(self, id):
+    #     comment = Comment.query.filter_by(id=id).first()
+    #     if comment:
+    #         db.session.delete(comment)
+    #         db.session.commit()
+    #         response_body= ''
+    #         return response_body, 204
+    #     else: 
+    #         response_body = {'error': 'Comment not found'}
+    #         return response_body, 404
+
+api.add_resource(CommentsByID,'/comments/<int:id>')

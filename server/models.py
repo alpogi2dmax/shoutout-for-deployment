@@ -3,6 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from datetime import datetime
 
 from config import db, bcrypt, ma
 
@@ -29,6 +30,7 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String)
     profile_pic = db.Column(db.String)
 
+
     @hybrid_property
     def password_hash(self):
         raise Exception('Password hashes may not be viewed.')
@@ -43,6 +45,20 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
     
+    #add relationship with comment
+    comments = db.relationship('Comment', back_populates='commenter', cascade='all, delete-orphan')
+    
+class Comment(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String)
+    created_date = db.Column(db.DateTime)
+
+    #add relationship with user
+    commenter_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    commenter = db.relationship('User', back_populates='comments')
+    
 
 class UserSchema(ma.SQLAlchemySchema):
     class Meta:
@@ -56,7 +72,7 @@ class UserSchema(ma.SQLAlchemySchema):
     email = ma.auto_field()
     profile_pic = ma.auto_field()
     # comments = ma.Nested( lambda: CommentSchema, many=True, only=('id', 'comment', 'created_date', 'commenter', 'replies', 'likes'))
-    # comments = ma.Method("get_comments")
+    comments = ma.Method("get_comments")
     # replies = ma.Nested(lambda: ReplySchema, many=True, only=('id', 'reply', 'created_date', 'replier', 'comment'))
     # replies = ma.Method("get_replies")
     # followers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
@@ -72,13 +88,13 @@ class UserSchema(ma.SQLAlchemySchema):
         }
     )
 
-    # def get_comments(self, user):
-    #     comments = user.comments
-    #     comments_schema = CommentSchema(many=True)
-    #     # Use sorted with reverse=True to sort in descending order
-    #     sorted_comments = sorted(comments, key=lambda x: x.created_date, reverse=True)
-    #     comment_data = comments_schema.dump(sorted_comments)
-    #     return comment_data
+    def get_comments(self, user):
+        comments = user.comments
+        comments_schema = CommentSchema(many=True)
+        # Use sorted with reverse=True to sort in descending order
+        sorted_comments = sorted(comments, key=lambda x: x.created_date, reverse=True)
+        comment_data = comments_schema.dump(sorted_comments)
+        return comment_data
 
     # def get_replies(self, user):
     #     replies = user.replies
@@ -95,3 +111,37 @@ class UserSchema(ma.SQLAlchemySchema):
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+
+class CommentSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Comment
+        load_instance = True
+
+    id = ma.auto_field()
+    comment = ma.auto_field()
+    created_date = ma.auto_field()
+    commenter = ma.Nested(lambda: UserSchema, only=('id', 'first_name', 'last_name', 'profile_pic'))
+    # replies = ma.Nested(lambda: ReplySchema, many=True, only=('id', 'reply', 'created_date', 'user'))
+    # replies = ma.Method("get_replies")
+    # comment_likers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name'))
+    # likes = ma.Nested(lambda: LikeSchema, many=True, only=('id', 'comment_liker'))
+
+    url = ma.Hyperlinks(
+        {
+            "self": ma.URLFor(
+                "commentsbyid",
+                values=dict(id="<id>")),
+            "collection": ma.URLFor("comments"),
+        }
+    )
+
+    # def get_replies(self, comment):
+    #     replies = comment.replies
+    #     replies_schema = ReplySchema(many=True)
+    #     # Use sorted with reverse=True to sort in descending order
+    #     sorted_replies = sorted(replies, key=lambda x: x.created_date, reverse=True)
+    #     reply_data = replies_schema.dump(sorted_replies)
+    #     return reply_data
+
+comment_schema = CommentSchema()
+comments_schema = CommentSchema(many=True)
