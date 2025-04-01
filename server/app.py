@@ -10,7 +10,7 @@ from flask_restful import Resource
 
 from config import app, db, api
 
-from models import User
+from models import User, user_schema, users_schema
 
 
 
@@ -38,9 +38,15 @@ def index():
 
 class Users(Resource):
 
+    # def get(self):
+    #     users = [user.to_dict() for user in User.query.all()]
+    #     return make_response(jsonify(users), 200)
+    
     def get(self):
-        users = [user.to_dict() for user in User.query.all()]
-        return make_response(jsonify(users), 200)
+
+        users = User.query.all()
+        response = users_schema.dump(users), 200
+        return response
 
 api.add_resource(Users, '/users')
 
@@ -51,9 +57,14 @@ api.add_resource(Users, '/users')
 
 # api.add_resource(BirdByID, '/birds/<int:id>')
 
-class UserByID(Resource):
+class UsersByID(Resource):
+    # def get(self, id):
+    #     user = User.query.filter_by(id=id).first().to_dict()
+    #     return make_response(jsonify(user), 200)
+    
     def get(self, id):
-        user = User.query.filter_by(id=id).first().to_dict()
-        return make_response(jsonify(user), 200)
+        user = User.query.filter_by(id=id).first()
+        response = make_response(user_schema.dump(user), 200)
+        return response
 
-api.add_resource(UserByID, '/users/<int:id>')
+api.add_resource(UsersByID, '/users/<int:id>')
