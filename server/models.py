@@ -48,6 +48,11 @@ class User(db.Model, SerializerMixin):
     #add relationship with comment
     comments = db.relationship('Comment', back_populates='commenter', cascade='all, delete-orphan')
     
+    #add relationship with replies
+    replies = db.relationship('Reply', back_populates='replier', cascade='all, delete-orphan')
+
+
+
 class Comment(db.Model):
     __tablename__ = 'comments'
 
@@ -58,6 +63,36 @@ class Comment(db.Model):
     #add relationship with user
     commenter_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     commenter = db.relationship('User', back_populates='comments')
+
+    #add relationship with replies
+    replies = db.relationship('Reply', back_populates='comment', cascade='all, delete-orphan')
+
+
+class Reply(db.Model):
+    __tablename__ = 'replies'
+
+    id = db.Column(db.Integer, primary_key=True)
+    reply = db.Column(db.String)
+    created_date = db.Column(db.DateTime)
+
+    #add relationship with Comment
+    comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
+    comment = db.relationship('Comment', back_populates='replies')
+
+    #many to many relationship with User via likes
+    # reply_likes = db.relationship('ReplyLike', back_populates='liked_reply', cascade='all, delete-orphan')
+    # reply_likers = association_proxy('reply_likes', 'reply_liker')
+
+    #add relationship with User
+    replier_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    replier = db.relationship('User', back_populates='replies')
+
+    #validation
+    # @validates('replies')
+    # def validate_reply(self, key, replies):
+    #     if len(replies) < 1 or len(replies) > 145:
+    #         raise ValueError('replies cannot be blank and cannot be more than 145 characters')
+    #     return replies
     
 
 class UserSchema(ma.SQLAlchemySchema):
@@ -74,7 +109,7 @@ class UserSchema(ma.SQLAlchemySchema):
     # comments = ma.Nested( lambda: CommentSchema, many=True, only=('id', 'comment', 'created_date', 'commenter', 'replies', 'likes'))
     comments = ma.Method("get_comments")
     # replies = ma.Nested(lambda: ReplySchema, many=True, only=('id', 'reply', 'created_date', 'replier', 'comment'))
-    # replies = ma.Method("get_replies")
+    replies = ma.Method("get_replies")
     # followers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
     # followed = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
     # search_string = ma.Method('get_search_string')
@@ -96,13 +131,13 @@ class UserSchema(ma.SQLAlchemySchema):
         comment_data = comments_schema.dump(sorted_comments)
         return comment_data
 
-    # def get_replies(self, user):
-    #     replies = user.replies
-    #     replies_schema = ReplySchema(many=True)
-    #     # Use sorted with reverse=True to sort in descending order
-    #     sorted_replies = sorted(replies, key=lambda x: x.created_date, reverse=True)
-    #     reply_data = replies_schema.dump(sorted_replies)
-    #     return reply_data
+    def get_replies(self, user):
+        replies = user.replies
+        replies_schema = ReplySchema(many=True)
+        # Use sorted with reverse=True to sort in descending order
+        sorted_replies = sorted(replies, key=lambda x: x.created_date, reverse=True)
+        reply_data = replies_schema.dump(sorted_replies)
+        return reply_data
     
     # def get_search_string(self, user):
     #     # Concatenate the fields into a single search string
@@ -122,7 +157,7 @@ class CommentSchema(ma.SQLAlchemySchema):
     created_date = ma.auto_field()
     commenter = ma.Nested(lambda: UserSchema, only=('id', 'first_name', 'last_name', 'profile_pic'))
     # replies = ma.Nested(lambda: ReplySchema, many=True, only=('id', 'reply', 'created_date', 'user'))
-    # replies = ma.Method("get_replies")
+    replies = ma.Method("get_replies")
     # comment_likers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name'))
     # likes = ma.Nested(lambda: LikeSchema, many=True, only=('id', 'comment_liker'))
 
@@ -135,13 +170,37 @@ class CommentSchema(ma.SQLAlchemySchema):
         }
     )
 
-    # def get_replies(self, comment):
-    #     replies = comment.replies
-    #     replies_schema = ReplySchema(many=True)
-    #     # Use sorted with reverse=True to sort in descending order
-    #     sorted_replies = sorted(replies, key=lambda x: x.created_date, reverse=True)
-    #     reply_data = replies_schema.dump(sorted_replies)
-    #     return reply_data
+    def get_replies(self, comment):
+        replies = comment.replies
+        replies_schema = ReplySchema(many=True)
+        # Use sorted with reverse=True to sort in descending order
+        sorted_replies = sorted(replies, key=lambda x: x.created_date, reverse=True)
+        reply_data = replies_schema.dump(sorted_replies)
+        return reply_data
 
 comment_schema = CommentSchema()
 comments_schema = CommentSchema(many=True)
+
+class ReplySchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Reply
+        load_instance = True
+
+    id = ma.auto_field()
+    reply = ma.auto_field()
+    created_date = ma.auto_field()
+    replier = ma.Nested(lambda: UserSchema, only=('id', 'first_name', 'last_name', 'profile_pic'))
+    comment = ma.Nested(lambda: CommentSchema, only=('id', 'comment', 'created_date'))
+    # reply_likes = ma.Nested(lambda: ReplyLikeSchema, many=True, only=('id', 'reply_liker'))
+
+    url = ma.Hyperlinks(
+        {
+            "self": ma.URLFor(
+                "repliesbyid",
+                values=dict(id="<id>")),
+            "collection": ma.URLFor("replies"),
+        }
+    )
+
+reply_schema = ReplySchema()
+replies_schema = ReplySchema(many=True)

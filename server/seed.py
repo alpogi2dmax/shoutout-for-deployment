@@ -3,7 +3,7 @@ from datetime import datetime
 
 from app import app
 # from models import db, Bird
-from models import db, User, Comment
+from models import db, User, Comment, Reply
 
 with app.app_context():
 
@@ -11,8 +11,9 @@ with app.app_context():
     # Bird.query.delete()
 
     print('Deleting existing birds...')
-    User.query.delete()
+    Reply.query.delete()
     Comment.query.delete()
+    User.query.delete()
 
     # print('Creating bird objects...')
     # chickadee = Bird(name='Black-Capped Chickadee', species='Poecile Atricapillus')
@@ -200,6 +201,18 @@ with app.app_context():
     )
     comments.append(comment10)
     db.session.add_all(comments)
+
+    print("Seeding replies...")
+    replies = []
+    reply1 = Reply(
+        id=1,
+        reply="What?",
+        created_date=datetime.now(),
+        comment_id = 1,
+        replier_id = 2
+    )
+    replies.append(reply1)
+    db.session.add_all(replies)
 
     print('Committing transaction...')
     db.session.commit()

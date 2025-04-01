@@ -11,7 +11,7 @@ from datetime import datetime
 
 from config import app, db, api
 
-from models import User, Comment, user_schema, users_schema, comment_schema, comments_schema
+from models import User, Comment, Reply, user_schema, users_schema, comment_schema, comments_schema, reply_schema, replies_schema
 
 
 
@@ -140,3 +140,64 @@ class CommentsByID(Resource):
     #         return response_body, 404
 
 api.add_resource(CommentsByID,'/comments/<int:id>')
+
+class Replies(Resource):
+
+    def get(self):
+
+        replies = Reply.query.order_by(Reply.created_date.desc()).all()
+        response = replies_schema.dump(replies), 200
+        return response
+    
+    # def post(self):
+    #     try:
+    #         data = request.get_json()
+    #         reply = Reply(
+    #             reply = data['reply'],
+    #             comment_id = data['comment_id'],
+    #             replier_id = data['replier_id']
+    #         )
+    #         reply.created_date = datetime.now()
+    #         db.session.add(reply)
+    #         db.session.commit()
+    #         response = make_response(reply_schema.dump(reply), 201)
+    #         return response
+    #     except Exception as e:
+    #         response_body = {'errors': [str(e)]}
+    #         return response_body, 400
+    
+api.add_resource(Replies,'/replies')
+
+class RepliesByID(Resource):
+
+    def get(self, id):
+        reply = Reply.query.filter_by(id=id).first()
+        response = reply_schema.dump(reply), 200
+        return response
+    
+    # def patch(self, id):
+    #     reply = Reply.query.filter_by(id=id).first()
+    #     data = request.get_json()
+    #     if reply:
+    #         for attr, value, in data.items():
+    #             setattr(reply, attr, value)
+    #         db.session.add(reply)
+    #         db.session.commit()
+    #         response = make_response(reply_schema.dump(reply), 202)
+    #         return response
+    #     else:
+    #         response_body = {'error': 'Reply not found'}
+    #         return response_body, 404
+
+    # def delete(self, id):
+    #     reply = Reply.query.filter_by(id=id).first()
+    #     if reply:
+    #         db.session.delete(reply)
+    #         db.session.commit()
+    #         response_body= ''
+    #         return response_body, 204
+    #     else: 
+    #         response_body = {'error': 'Reply not found'}
+    #         return response_body, 404
+    
+api.add_resource(RepliesByID,'/replies/<int:id>')
