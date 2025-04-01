@@ -3,7 +3,7 @@ from datetime import datetime
 
 from app import app
 # from models import db, Bird
-from models import db, User, Comment, Reply, Like, ReplyLike
+from models import db, User, Comment, Reply, Like, ReplyLike, Follow
 
 with app.app_context():
 
@@ -11,6 +11,7 @@ with app.app_context():
     # Bird.query.delete()
 
     print('Deleting existing birds...')
+    Follow.query.delete()
     ReplyLike.query.delete()
     Like.query.delete()
     Reply.query.delete()
@@ -238,6 +239,17 @@ with app.app_context():
     db.session.add_all(reply_likes)
 
     print('Committing transaction...')
+    db.session.commit()
+
+    print("Seeding follows...")
+    follows = []
+    follow1 = Follow(
+        follow_date=datetime.now(),
+        follower_id = 1,
+        followed_id  = 2
+    )
+    follows.append(follow1)
+    db.session.add_all(follows)
     db.session.commit()
 
     print('Complete.')

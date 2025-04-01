@@ -19,6 +19,21 @@ from config import db, bcrypt, ma
 
 #     def __repr__(self):
 #         return f'<Bird {self.name} | Species: {self.species}>'
+
+class Follow(db.Model):
+    __tablename__ = 'follows'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    follow_date = db.Column(db.DateTime, default=datetime.now)
+
+    follower = db.relationship('User', foreign_keys=[follower_id], back_populates='following_association')
+    followed = db.relationship('User', foreign_keys=[followed_id], back_populates='follower_association')
+
+    __table_args__ = (
+       db.UniqueConstraint('follower_id', 'followed_id', name='unique_follow'),
+    )
     
 class User(db.Model):
     __tablename__ = 'users'
@@ -59,6 +74,12 @@ class User(db.Model):
     #add relationship with replies via likes
     reply_likes = db.relationship('ReplyLike', back_populates='reply_liker', cascade='all, delete-orphan')
     liked_replies = association_proxy('reply_likes', 'liked_reply')
+
+    following_association = db.relationship('Follow', foreign_keys=[Follow.follower_id], back_populates='follower', lazy='dynamic', cascade='all, delete-orphan')
+    follower_association = db.relationship('Follow', foreign_keys=[Follow.followed_id], back_populates='followed', lazy='dynamic', cascade='all, delete-orphan')
+
+    followed = association_proxy('following_association', 'followed')
+    followers = association_proxy('follower_association', 'follower')
 
 
 class Comment(db.Model):
@@ -147,8 +168,8 @@ class UserSchema(ma.SQLAlchemySchema):
     comments = ma.Method("get_comments")
     # replies = ma.Nested(lambda: ReplySchema, many=True, only=('id', 'reply', 'created_date', 'replier', 'comment'))
     replies = ma.Method("get_replies")
-    # followers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
-    # followed = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
+    followers = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
+    followed = ma.Nested(lambda: UserSchema, many=True, only=('id', 'first_name', 'last_name', 'profile_pic', 'username'))
     # search_string = ma.Method('get_search_string')
 
     url = ma.Hyperlinks(
@@ -284,3 +305,25 @@ class ReplyLikeSchema(ma.SQLAlchemySchema):
 
 reply_like_schema = ReplyLikeSchema()
 reply_likes_schema = ReplyLikeSchema(many=True)
+
+class FollowSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Follow
+        load_instance = True
+    
+    id = ma.auto_field()
+    follower_id = ma.auto_field()
+    followed_id = ma.auto_field()
+    follow_date = ma.auto_field()
+
+    url = ma.Hyperlinks(
+        {
+            "self": ma.URLFor(
+                "followsbyid",
+                values=dict(id="<id>")),
+            "collection": ma.URLFor("follows"),
+        }
+    )
+
+follow_schema = FollowSchema()
+follows_schema = FollowSchema(many=True)
