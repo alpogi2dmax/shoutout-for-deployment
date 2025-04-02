@@ -48,6 +48,25 @@ class Users(Resource):
         users = User.query.all()
         response = users_schema.dump(users), 200
         return response
+    
+    def post(self):
+        try:
+            data = request.get_json()
+            user = User(
+                username = data['username'],
+                email = data['email'],
+                first_name = data['first_name'],
+                last_name = data['last_name'],
+                profile_pic = data['profile_pic']
+            )
+            user.password_hash = data['password']
+            db.session.add(user)
+            db.session.commit()
+            response = make_response(user_schema.dump(user), 201)
+            return response
+        except Exception as e:
+            response_body = {'errors': [str(e)]}
+            return response_body, 400
 
 api.add_resource(Users, '/users')
 
@@ -67,8 +86,53 @@ class UsersByID(Resource):
         user = User.query.filter_by(id=id).first()
         response = make_response(user_schema.dump(user), 200)
         return response
+    
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        data = request.get_json()
+        if user:
+            if 'password' in data:
+                user.password_hash = data['password']
+            for attr, value, in data.items():
+                setattr(user, attr, value)
+            db.session.add(user)
+            db.session.commit()
+            response = make_response(user_schema.dump(user), 202)
+            return response
+        else:
+            response_body = {'error': 'User not found'}
+            return response_body, 404
+        
+    def delete(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            response_body= ''
+            return response_body, 204
+        else: 
+            response_body = {'error': 'User not found'}
+            return response_body, 404
 
 api.add_resource(UsersByID, '/users/<int:id>')
+
+class UsersBySearch(Resource):
+
+    def get(self, search):
+        search_term = f"%{search.lower()}%"
+        users = User.query.filter(
+            (User.username.ilike(search_term)) |
+            (User.email.ilike(search_term)) |
+            (User.first_name.ilike(search_term)) |
+            (User.last_name.ilike(search_term))
+        ).all()
+        # print(users)
+
+        # Serialize the filtered users
+        response = make_response(users_schema.dump(users), 200)
+        return response
+    
+api.add_resource(UsersBySearch,'/users/<string:search>')
 
 class Comments(Resource):
 
@@ -89,21 +153,21 @@ class Comments(Resource):
         response = comments_schema.dump(comments), 200
         return response
     
-    # def post(self):
-    #     try:
-    #         data = request.get_json()
-    #         comment = Comment(
-    #             comment = data['comment'],
-    #             commenter_id = data['commenter_id']
-    #         )
-    #         comment.created_date = datetime.now()
-    #         db.session.add(comment)
-    #         db.session.commit()
-    #         response = make_response(comment_schema.dump(comment), 201)
-    #         return response
-    #     except Exception as e:
-    #         response_body = {'errors': [str(e)]}
-    #         return response_body, 400
+    def post(self):
+        try:
+            data = request.get_json()
+            comment = Comment(
+                comment = data['comment'],
+                commenter_id = data['commenter_id']
+            )
+            comment.created_date = datetime.now()
+            db.session.add(comment)
+            db.session.commit()
+            response = make_response(comment_schema.dump(comment), 201)
+            return response
+        except Exception as e:
+            response_body = {'errors': [str(e)]}
+            return response_body, 400
 
 api.add_resource(Comments,'/comments')
 
@@ -114,32 +178,44 @@ class CommentsByID(Resource):
         response = comment_schema.dump(comment), 200
         return  response
     
-    # def patch(self, id):
-    #     comment = Comment.query.filter_by(id=id).first()
-    #     data = request.get_json()
-    #     if comment:
-    #         for attr, value, in data.items():
-    #             setattr(comment, attr, value)
-    #         db.session.add(comment)
-    #         db.session.commit()
-    #         response = make_response(comment_schema.dump(comment), 202)
-    #         return response
-    #     else:
-    #         response_body = {'error': 'Comment not found'}
-    #         return response_body, 404
+    def patch(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        data = request.get_json()
+        if comment:
+            for attr, value, in data.items():
+                setattr(comment, attr, value)
+            db.session.add(comment)
+            db.session.commit()
+            response = make_response(comment_schema.dump(comment), 202)
+            return response
+        else:
+            response_body = {'error': 'Comment not found'}
+            return response_body, 404
         
-    # def delete(self, id):
-    #     comment = Comment.query.filter_by(id=id).first()
-    #     if comment:
-    #         db.session.delete(comment)
-    #         db.session.commit()
-    #         response_body= ''
-    #         return response_body, 204
-    #     else: 
-    #         response_body = {'error': 'Comment not found'}
-    #         return response_body, 404
+    def delete(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if comment:
+            db.session.delete(comment)
+            db.session.commit()
+            response_body= ''
+            return response_body, 204
+        else: 
+            response_body = {'error': 'Comment not found'}
+            return response_body, 404
 
 api.add_resource(CommentsByID,'/comments/<int:id>')
+
+class CommentsBySearch(Resource):
+
+    def get(self, search):
+        search_term = f"%{search.lower()}%"
+        comments = Comment.query.filter(Comment.comment.ilike(search_term)).order_by(Comment.created_date.desc()).all()
+
+        # Serialize the filtered users
+        response = make_response(comments_schema.dump(comments), 200)
+        return response
+    
+api.add_resource(CommentsBySearch,'/comments/<string:search>')
 
 class Replies(Resource):
 
@@ -149,22 +225,22 @@ class Replies(Resource):
         response = replies_schema.dump(replies), 200
         return response
     
-    # def post(self):
-    #     try:
-    #         data = request.get_json()
-    #         reply = Reply(
-    #             reply = data['reply'],
-    #             comment_id = data['comment_id'],
-    #             replier_id = data['replier_id']
-    #         )
-    #         reply.created_date = datetime.now()
-    #         db.session.add(reply)
-    #         db.session.commit()
-    #         response = make_response(reply_schema.dump(reply), 201)
-    #         return response
-    #     except Exception as e:
-    #         response_body = {'errors': [str(e)]}
-    #         return response_body, 400
+    def post(self):
+        try:
+            data = request.get_json()
+            reply = Reply(
+                reply = data['reply'],
+                comment_id = data['comment_id'],
+                replier_id = data['replier_id']
+            )
+            reply.created_date = datetime.now()
+            db.session.add(reply)
+            db.session.commit()
+            response = make_response(reply_schema.dump(reply), 201)
+            return response
+        except Exception as e:
+            response_body = {'errors': [str(e)]}
+            return response_body, 400
     
 api.add_resource(Replies,'/replies')
 
@@ -175,30 +251,30 @@ class RepliesByID(Resource):
         response = reply_schema.dump(reply), 200
         return response
     
-    # def patch(self, id):
-    #     reply = Reply.query.filter_by(id=id).first()
-    #     data = request.get_json()
-    #     if reply:
-    #         for attr, value, in data.items():
-    #             setattr(reply, attr, value)
-    #         db.session.add(reply)
-    #         db.session.commit()
-    #         response = make_response(reply_schema.dump(reply), 202)
-    #         return response
-    #     else:
-    #         response_body = {'error': 'Reply not found'}
-    #         return response_body, 404
+    def patch(self, id):
+        reply = Reply.query.filter_by(id=id).first()
+        data = request.get_json()
+        if reply:
+            for attr, value, in data.items():
+                setattr(reply, attr, value)
+            db.session.add(reply)
+            db.session.commit()
+            response = make_response(reply_schema.dump(reply), 202)
+            return response
+        else:
+            response_body = {'error': 'Reply not found'}
+            return response_body, 404
 
-    # def delete(self, id):
-    #     reply = Reply.query.filter_by(id=id).first()
-    #     if reply:
-    #         db.session.delete(reply)
-    #         db.session.commit()
-    #         response_body= ''
-    #         return response_body, 204
-    #     else: 
-    #         response_body = {'error': 'Reply not found'}
-    #         return response_body, 404
+    def delete(self, id):
+        reply = Reply.query.filter_by(id=id).first()
+        if reply:
+            db.session.delete(reply)
+            db.session.commit()
+            response_body= ''
+            return response_body, 204
+        else: 
+            response_body = {'error': 'Reply not found'}
+            return response_body, 404
     
 api.add_resource(RepliesByID,'/replies/<int:id>')
 

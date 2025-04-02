@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
+from email_validator import validate_email, EmailNotValidError
+from sqlalchemy.orm import validates
 from datetime import datetime
 
 from config import db, bcrypt, ma
@@ -81,6 +83,33 @@ class User(db.Model):
     followed = association_proxy('following_association', 'followed')
     followers = association_proxy('follower_association', 'follower')
 
+    #validation
+    @validates('username')
+    def validate_username(self, key, username):
+        if len(username) < 3 or len(username) > 15:
+            raise ValueError('username must be between 3 and 15 characters')
+        return username
+    
+    @validates('first_name')
+    def validate_first_name(self, key, first_name):
+        if len(first_name) < 1 or len(first_name) > 20:
+            raise ValueError('first name must be between 1 and 20 characters')
+        return first_name
+    
+    @validates('last_name')
+    def validate_last_name(self, key, last_name):
+        if len(last_name) < 1 or len(last_name) > 20:
+            raise ValueError('last name must be between 1 and 20 characters')
+        return last_name
+    
+    @validates('email')
+    def validate_email(self, key, email):
+        try:
+            validate_email(email)
+        except EmailNotValidError:
+            raise ValueError("Invalid email address")
+        return email
+
 
 class Comment(db.Model):
     __tablename__ = 'comments'
@@ -99,6 +128,13 @@ class Comment(db.Model):
     #many to many relationship with User via likes
     likes = db.relationship('Like', back_populates='liked_comment', cascade='all, delete-orphan')
     comment_likers = association_proxy('likes', 'comment_liker')
+
+    #validation
+    @validates('comment')
+    def validate_username(self, key, comment):
+        if len(comment) < 1 or len(comment) > 145:
+            raise ValueError('comment cannot be blank and cannot be more than 145 characters')
+        return comment
 
 class Reply(db.Model):
     __tablename__ = 'replies'
@@ -120,11 +156,11 @@ class Reply(db.Model):
     replier = db.relationship('User', back_populates='replies')
 
     #validation
-    # @validates('replies')
-    # def validate_reply(self, key, replies):
-    #     if len(replies) < 1 or len(replies) > 145:
-    #         raise ValueError('replies cannot be blank and cannot be more than 145 characters')
-    #     return replies
+    @validates('replies')
+    def validate_reply(self, key, replies):
+        if len(replies) < 1 or len(replies) > 145:
+            raise ValueError('replies cannot be blank and cannot be more than 145 characters')
+        return replies
 
 class Like(db.Model):
     __tablename__ = "likes"
