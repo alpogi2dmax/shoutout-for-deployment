@@ -37,7 +37,7 @@ function SignUpForm() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("https://shoutout-for-deployment-1.onrender.com/signup", {
+            fetch("https://shoutout-for-deployment.onrender.com/signup", {
             // fetch("/signup", {
                 method: "POST",
                 headers: {

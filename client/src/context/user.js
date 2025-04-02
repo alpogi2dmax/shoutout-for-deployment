@@ -10,7 +10,7 @@ function UserProvider({children}) {
     const [ followed, setFollowed ] = useState([])
 
     useEffect(() => {
-        fetch('https://shoutout-for-deployment-1.onrender.com/checksession')
+        fetch('https://shoutout-for-deployment.onrender.com/checksession')
         // fetch('http://127.0.0.1:5000/checksession')
         .then(response => {
             if (!response.ok) {
@@ -33,7 +33,7 @@ function UserProvider({children}) {
     }, [])
 
     const handleLogoutUser = () => {
-        fetch('https://shoutout-for-deployment-1.onrender.com/logout', {
+        fetch('https://shoutout-for-deployment.onrender.com/logout', {
         // fetch('http://127.0.0.1:5000/logout', {
           method: "DELETE",
         })

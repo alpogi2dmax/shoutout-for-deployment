@@ -12,7 +12,7 @@ function LoginForm() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        fetch('https://shoutout-for-deployment-1.onrender.com/login', {
+        fetch('https://shoutout-for-deployment.onrender.com/login', {
         // fetch('http://127.0.0.1:5000/login', {
             method: 'POST',
             headers: {
