@@ -6,7 +6,7 @@ function App() {
   useEffect(() => {
     fetch('https://shoutout-for-deployment.onrender.com/users/1')
       .then((response) => response.json())
-      .then((data) => setMessage(data.message))
+      .then((data) => setMessage(data))
       .catch((error) => console.error('Error fetching data: ', error));
   }, []);
 
