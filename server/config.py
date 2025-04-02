@@ -7,9 +7,11 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 
-app = Flask(__name__)
+# app = Flask(__name__)
+app = Flask(__name__, static_folder='client/build', static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'secret_key'
@@ -27,3 +29,6 @@ bcrypt = Bcrypt(app)
 ma = Marshmallow(app)
 
 api = Api(app)
+
+# Instantiate CORS
+CORS(app)

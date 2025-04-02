@@ -37,6 +37,15 @@ from models import User, Comment, Reply, Like, ReplyLike, Follow, user_schema, u
 def index():
     return '<h1>Shoutout Server</h1>'
 
+class Hello(Resource):
+
+    def get(self):
+        response = {'message': 'hello from flask'}
+        return response, 200
+    
+api.add_resource(Hello, '/hello')
+    
+
 class Users(Resource):
 
     # def get(self):
@@ -481,3 +490,6 @@ class Logout(Resource):
         return {}, 204
     
 api.add_resource(Logout, '/logout')
+
+if __name__ == '__main__':
+    app.run(debug=True)
