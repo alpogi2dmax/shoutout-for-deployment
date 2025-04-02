@@ -46,10 +46,10 @@ function UserProvider({children}) {
         })
       }
 
-    // const handleCommentLike = (updatedComment) => {
-    //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
-    //     setComments(updatedComments)
-    // }
+    const handleCommentLike = (updatedComment) => {
+        const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
+        setComments(updatedComments)
+    }
 
     // const updateComments = (updatedComment) => {
     //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
@@ -64,14 +64,14 @@ function UserProvider({children}) {
     //     setReplies([reply, ...replies])
     // }
 
-    // const deleteComments = (deletedComment) => {
-    //     fetch(`/comments/${deletedComment.id}`, {
-    //         method: "DELETE",
-    //     })
-    //     .then(() => {
-    //         setComments(comments.filter(comment => comment.id !== deletedComment.id))
-    //     })
-    // }
+    const deleteComments = (deletedComment) => {
+        fetch(`/comments/${deletedComment.id}`, {
+            method: "DELETE",
+        })
+        .then(() => {
+            setComments(comments.filter(comment => comment.id !== deletedComment.id))
+        })
+    }
 
     // const handleReplyLike = (updatedReply) => {
     //     const updatedReplies = replies.map(reply => reply.id === updatedReply.id ? updatedReply : reply)
@@ -99,7 +99,7 @@ function UserProvider({children}) {
 
     return (
         // <UserContext.Provider value={{ user, setUser, handleLogoutUser, comments, handleCommentLike, addComments, deleteComments, replies, handleReplyLike, addReplies, updateComments, deleteReplyUser, followers, followed, setFollowed }}>
-        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser }}>    
+        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments }}>    
             {children}
         </UserContext.Provider>
     )

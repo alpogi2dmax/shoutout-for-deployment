@@ -87,7 +87,7 @@ function CommentProvider({children}) {
 
     return (
         // <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComments, deleteComment, handleLike, handleReplyLikeComment, deleteReplyComment }}>
-        <CommentContext.Provider value={{comments, handleLogoutComments}}>
+        <CommentContext.Provider value={{comments, setComments, handleLogoutComments}}>
             {children}
         </CommentContext.Provider>
     )
