@@ -1,5 +1,5 @@
 import App from "./components/App";
-// import Home from "./components/Home";
+import Home from "./components/Home";
 // import CommentPage from "./components/CommentPage";
 // import UserPage from "./components/UserPage";
 // import UserCommentPage from "./components/UserCommentPage";
@@ -18,11 +18,11 @@ const routes = [
     {
         path: '/',
         element: <App />,
-    //     children: [
-    //         {
-    //             path: '/',
-    //             element: <Home />,
-    //         },
+        children: [
+            {
+                path: '/',
+                element: <Home />,
+            },
     //         {
     //             path: '/explore',
     //             element: <Explore />,
@@ -85,7 +85,7 @@ const routes = [
     //             path: '/user-settings-edit',
     //             element: <UserSettingsEdit />
     //         },
-    //     ]
+        ]
     }
 ]
 
