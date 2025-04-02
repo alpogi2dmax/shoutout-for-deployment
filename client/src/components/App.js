@@ -5,6 +5,7 @@ function App() {
 
   useEffect(() => {
     fetch('https://shoutout-for-deployment.onrender.com/users/1')
+    // fetch('http://127.0.0.1:5000/users/1')
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
