@@ -24,8 +24,8 @@ function CommentCard({comment}) {
     console.log(comment.commenter)
 
     const handleLikeClick = () => {
-        if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user.id)) {
-            const like = comment.likes.find(x => x.comment_liker.id === user.id)
+        if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user?.id)) {
+            const like = comment.likes.find(x => x.comment_liker?.id === user?.id)
             fetch(`https://shoutout-for-deployment.onrender.com/likes/${like.id}`, {
                 method: "DELETE",
             })
