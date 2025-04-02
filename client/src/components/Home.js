@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-// import CommentList from './CommentList';
+import CommentList from './CommentList';
 import { UserContext } from '../context/user';
 import Login from './Login';
 // import CreateComment from './CreateComment';
@@ -15,7 +15,7 @@ function Home() {
             <div>
                 <h1>Hello {user.first_name}!</h1>
                 {/* <CreateComment /> */}
-                {/* <CommentList /> */}
+                <CommentList />
             </div>
         )
     } else {
