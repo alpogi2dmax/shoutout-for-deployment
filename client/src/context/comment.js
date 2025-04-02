@@ -21,12 +21,12 @@ function CommentProvider({children}) {
           setComments([])
       }
 
-    // const updateComments = (updatedComment) => {
-    //     const updatedComments = comments.map(c =>
-    //         c.id === updatedComment.id ? updatedComment : c
-    //     )
-    //     setComments(updatedComments)
-    // }
+    const updateComments = (updatedComment) => {
+        const updatedComments = comments.map(c =>
+            c.id === updatedComment.id ? updatedComment : c
+        )
+        setComments(updatedComments)
+    }
 
     // const handleLike = (updatedComment) => {
     //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
@@ -37,9 +37,9 @@ function CommentProvider({children}) {
     //     setComments(comments.filter(comment => comment.id !== commentId))
     // }
 
-    // const deleteComment = (deletedComment) => {
-    //         setComments(comments.filter(comment => comment.id !== deletedComment.id))
-    // }
+    const deleteComment = (deletedComment) => {
+            setComments(comments.filter(comment => comment.id !== deletedComment.id))
+    }
 
     // const handleReplyLikeComment = (updatedReply) => {
     //     const targetComment = comments.find(comment => comment.id === updatedReply.comment.id)
@@ -87,7 +87,7 @@ function CommentProvider({children}) {
 
     return (
         // <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComments, deleteComment, handleLike, handleReplyLikeComment, deleteReplyComment }}>
-        <CommentContext.Provider value={{comments, setComments, handleLogoutComments}}>
+        <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComment}}>
             {children}
         </CommentContext.Provider>
     )
