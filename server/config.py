@@ -12,6 +12,7 @@ from flask_marshmallow import Marshmallow
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'secret_key'
 app.json.compact = False
 
 metadata = MetaData(naming_convention={
