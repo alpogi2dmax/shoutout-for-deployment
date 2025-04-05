@@ -12,10 +12,13 @@ function CommentList() {
     useEffect(() => {
         if (user) {
             fetch('https://shoutout-for-deployment.onrender.com/comments')
+            // fetch('http://localhost:5000/comments')
             .then(r => r.json())
             .then(data => setComments(data))
         }
     }, [])
+
+    console.log(comments)
 
     return (
         <div>

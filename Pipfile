@@ -11,15 +11,9 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
-flask-bcrypt = "*"
-marshmallow = "*"
-marshmallow-sqlalchemy = "*"
-flask-marshmallow = "*"
-email-validator = "*"
 flask-cors = "*"
-flask-session = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.8"

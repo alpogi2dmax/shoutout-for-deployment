@@ -37,9 +37,10 @@ function SignUpForm() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("https://shoutout-for-deployment.onrender.com/signup", {
-            // fetch("/signup", {
+            // fetch("http://localhost:5000/signup", {
+            fetch("https://shoutout-for-deployment-1.onrender.com/signup", {
                 method: "POST",
+                credentails: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },

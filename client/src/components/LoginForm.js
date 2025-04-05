@@ -13,8 +13,9 @@ function LoginForm() {
     function handleSubmit(e) {
         e.preventDefault();
         fetch('https://shoutout-for-deployment.onrender.com/login', {
-        // fetch('http://127.0.0.1:5000/login', {
+        // fetch('http://localhost:5000/login', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },

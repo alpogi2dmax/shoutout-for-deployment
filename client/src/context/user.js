@@ -10,8 +10,11 @@ function UserProvider({children}) {
     const [ followed, setFollowed ] = useState([])
 
     useEffect(() => {
-        fetch('https://shoutout-for-deployment.onrender.com/checksession')
-        // fetch('http://127.0.0.1:5000/checksession')
+        fetch('https://shoutout-for-deployment.onrender.com/checksession', {
+        // fetch('http://localhost:5000/checksession', {
+            method: "GET",
+            credentials: "include",
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -22,6 +25,7 @@ function UserProvider({children}) {
             if (data.session === null) {
                 console.log('No active session');
             } else {
+                console.log(data)
                 setUser(data);
                 setComments(data.comments);
                 setReplies(data.replies);
@@ -34,8 +38,9 @@ function UserProvider({children}) {
 
     const handleLogoutUser = () => {
         fetch('https://shoutout-for-deployment.onrender.com/logout', {
-        // fetch('http://127.0.0.1:5000/logout', {
+        // fetch('http://localhost:5000/logout', {
           method: "DELETE",
+          credentials: "include"
         })
         .then(() => {
           setUser(null)
@@ -65,7 +70,8 @@ function UserProvider({children}) {
     // }
 
     const deleteComments = (deletedComment) => {
-        fetch(`/comments/${deletedComment.id}`, {
+        fetch(`https://shoutout-for-deployment.onrender.com/comments/${deletedComment.id}`, {
+        // fetch(`http://localhost:5000/comments/${deletedComment.id}`, {
             method: "DELETE",
         })
         .then(() => {

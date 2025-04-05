@@ -447,7 +447,7 @@ api.add_resource(SignUp, '/signup')
 class CheckSession(Resource):
 
     def get(self):
-
+        print("Session in /checksession:", session)
         user_id = session.get('user_id')
 
         if user_id:
@@ -473,6 +473,8 @@ class Login(Resource):
 
         if user.authenticate(password):
             session['user_id'] = user.id
+            # session.permanent = True  # Ensures session persists
+            # print("Session after login:", session)  # Debugging
             response = make_response(
                 user_schema.dump(user), 200)
             return response
