@@ -110,7 +110,7 @@ function CommentCard({comment}) {
             // fetch('http://127.0.0.1:5000/likes', {
                 method: 'POST',
                 headers: {
-                    'Content_type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(values, null, 2),
             })
