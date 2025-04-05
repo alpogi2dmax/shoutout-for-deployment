@@ -55,57 +55,26 @@ function CommentCard({comment}) {
     //     }
     // }
 
-    // const handleLikeClick = () => {
-    //     if ((comment?.likes || []).map(x => x.comment_liker?.id).includes(user?.id)) {
-    //         const like = comment.likes.find(x => x.comment_liker?.id === user?.id)
-    //         fetch(`https://shoutout-for-deployment.onrender.com/likes/${like.id}`, {
-    //         // fetch(`http://127.0.0.1:5000/likes/${like.id}`, {
-    //             method: "DELETE",
-    //         })
-    //         .then(() => {
-    //             const updatedComment = {
-    //                 ...comment,
-    //                 likes: comment.likes.filter(x => x.comment_liker.id !== user.id)
-    //             }
-    //             updateComments(updatedComment)
-    //             handleCommentLike(updatedComment)
-    //         })  
-            
-        
-    //     } else {
-    //         let values = {
-    //             comment_liker_id: user.id,
-    //             liked_comment_id: comment.id
-    //         }
-    //         fetch('https://shoutout-for-deployment.onrender.com/likes', {
-    //         // fetch('http://127.0.0.1:5000/likes', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content_type': 'application/json'
-    //             },
-    //             body: JSON.stringify(values, null, 2),
-    //         })
-    //         .then((r) => r.json())
-    //         .then(like => {
-    //             const updatedComment = {
-    //                 ...comment,
-    //                 likes: [...comment.likes, like]
-    //             }
-    //             updateComments(updatedComment)
-    //             handleCommentLike(updatedComment)
-                
-    //         })
-    //     }
-    // }
-
     const handleLikeClick = () => {
-        if (comment.likes.length === 0) {
-
+        if ((comment?.likes || []).map(x => x.comment_liker?.id).includes(user?.id)) {
+            const like = comment.likes.find(x => x.comment_liker?.id === user?.id)
+            fetch(`https://shoutout-for-deployment.onrender.com/likes/${like.id}`, {
+            // fetch(`http://127.0.0.1:5000/likes/${like.id}`, {
+                method: "DELETE",
+            })
+            .then(() => {
+                const updatedComment = {
+                    ...comment,
+                    likes: comment.likes.filter(x => x.comment_liker.id !== user.id)
+                }
+                updateComments(updatedComment)
+                handleCommentLike(updatedComment)
+            })  
+        } else {
             let values = {
                 comment_liker_id: user.id,
                 liked_comment_id: comment.id
             }
-            console.log(values)
             fetch('https://shoutout-for-deployment.onrender.com/likes', {
             // fetch('http://127.0.0.1:5000/likes', {
                 method: 'POST',
@@ -125,6 +94,35 @@ function CommentCard({comment}) {
                 
             })
         }
+    }
+
+    // const handleLikeClick = () => {
+    //     if (comment.likes.length === 0) {
+
+    //         let values = {
+    //             comment_liker_id: user.id,
+    //             liked_comment_id: comment.id
+    //         }
+    //         console.log(values)
+    //         fetch('https://shoutout-for-deployment.onrender.com/likes', {
+    //         // fetch('http://127.0.0.1:5000/likes', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(values, null, 2),
+    //         })
+    //         .then((r) => r.json())
+    //         .then(like => {
+    //             const updatedComment = {
+    //                 ...comment,
+    //                 likes: [...comment.likes, like]
+    //             }
+    //             updateComments(updatedComment)
+    //             handleCommentLike(updatedComment)
+                
+    //         })
+    //     }
 
         // if ((comment?.likes || []).map(x => x.comment_liker?.id).includes(user?.id)) {
         //     const like = comment.likes.find(x => x.comment_liker?.id === user?.id)
@@ -166,7 +164,7 @@ function CommentCard({comment}) {
                 
         //     })
         // }
-    }
+    // }
 
     // const handleDeleteClick = () => {
     //     deleteComment(comment)
