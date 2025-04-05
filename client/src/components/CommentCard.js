@@ -21,8 +21,6 @@ function CommentCard({comment}) {
 
     const formattedDate = `${month} ${day}, ${year}`
 
-    console.log(comment)
-
     // const handleLikeClick = () => {
     //     if (comment.likes.length === 0) {
     //         console.log("there are no likes")

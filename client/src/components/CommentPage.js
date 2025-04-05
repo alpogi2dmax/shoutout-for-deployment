@@ -87,6 +87,8 @@ function CommentPage() {
         return <p>Loading...</p>
     }
 
+    console.log(comment)
+
     const createdDate = new Date(comment.created_date)
 
     const options = { month: 'long' };
