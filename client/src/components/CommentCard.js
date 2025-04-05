@@ -106,24 +106,24 @@ function CommentCard({comment}) {
                 liked_comment_id: comment.id
             }
             console.log(values)
-            // fetch('https://shoutout-for-deployment.onrender.com/likes', {
-            // // fetch('http://127.0.0.1:5000/likes', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content_type': 'application/json'
-            //     },
-            //     body: JSON.stringify(values, null, 2),
-            // })
-            // .then((r) => r.json())
-            // .then(like => {
-            //     const updatedComment = {
-            //         ...comment,
-            //         likes: [...comment.likes, like]
-            //     }
-            //     updateComments(updatedComment)
-            //     handleCommentLike(updatedComment)
+            fetch('https://shoutout-for-deployment.onrender.com/likes', {
+            // fetch('http://127.0.0.1:5000/likes', {
+                method: 'POST',
+                headers: {
+                    'Content_type': 'application/json'
+                },
+                body: JSON.stringify(values, null, 2),
+            })
+            .then((r) => r.json())
+            .then(like => {
+                const updatedComment = {
+                    ...comment,
+                    likes: [...comment.likes, like]
+                }
+                updateComments(updatedComment)
+                handleCommentLike(updatedComment)
                 
-            // })
+            })
         }
 
         // if ((comment?.likes || []).map(x => x.comment_liker?.id).includes(user?.id)) {
