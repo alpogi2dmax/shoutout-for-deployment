@@ -1,6 +1,6 @@
 import App from "./components/App";
 import Home from "./components/Home";
-// import CommentPage from "./components/CommentPage";
+import CommentPage from "./components/CommentPage";
 // import UserPage from "./components/UserPage";
 // import UserCommentPage from "./components/UserCommentPage";
 // import UserReplyPage from "./components/UserReplyPage";
@@ -27,10 +27,10 @@ const routes = [
     //             path: '/explore',
     //             element: <Explore />,
     //         },
-    //         {
-    //             path: '/comments/:id',
-    //             element: <CommentPage />
-    //         },
+            {
+                path: '/comments/:id',
+                element: <CommentPage />
+            },
     //         {
     //             path: '/user-settings',
     //             element: <UserSettings />,
