@@ -19,7 +19,7 @@ function CommentPage() {
 
 
     useEffect(() => {
-        fetch(`/comments/${id}`)
+        fetch(`https://shoutout-for-deployment.onrender.com/comments/${id}`)
         .then(r => r.json())
         .then(data => {
             setComment(data)
@@ -29,7 +29,7 @@ function CommentPage() {
             console.error('Fetch error:', error)
             setLoading(false)
         })
-    }, [])
+    }, [id])
 
     // const handleLikeClick = () => {
     //     if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user.id)) {
