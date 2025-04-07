@@ -100,8 +100,11 @@ function CommentPage() {
 
     const handleDeleteClick = () => {
         deleteComments(comment)
-        // deleteComment(comment)
-        navigate('/')
+        deleteComment(comment)
+        setTimeout(() => {
+            console.log('To be redirected')
+            navigate('/')
+        },3000)
     }
 
     // console.log(comment)
