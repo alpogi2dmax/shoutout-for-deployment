@@ -61,9 +61,9 @@ function UserProvider({children}) {
     //     setComments(updatedComments)
     // }
 
-    // const addComments = (comment) =>  {
-    //     setComments([comment, ...comments])
-    // }
+    const addComments = (comment) =>  {
+        setComments([comment, ...comments])
+    }
 
     // const addReplies = (reply) => {
     //     setReplies([reply, ...replies])
@@ -105,7 +105,7 @@ function UserProvider({children}) {
 
     return (
         // <UserContext.Provider value={{ user, setUser, handleLogoutUser, comments, handleCommentLike, addComments, deleteComments, replies, handleReplyLike, addReplies, updateComments, deleteReplyUser, followers, followed, setFollowed }}>
-        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments }}>    
+        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments, addComments }}>    
             {children}
         </UserContext.Provider>
     )
