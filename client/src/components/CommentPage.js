@@ -100,7 +100,7 @@ function CommentPage() {
 
     const handleDeleteClick = () => {
         deleteComments(comment)
-        deleteComment(comment)
+        // deleteComment(comment)
         navigate('/')
     }
 
