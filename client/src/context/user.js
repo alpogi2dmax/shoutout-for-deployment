@@ -56,18 +56,18 @@ function UserProvider({children}) {
         setComments(updatedComments)
     }
 
-    // const updateComments = (updatedComment) => {
-    //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
-    //     setComments(updatedComments)
-    // }
+    const updateComments = (updatedComment) => {
+        const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
+        setComments(updatedComments)
+    }
 
     const addComments = (comment) =>  {
         setComments([comment, ...comments])
     }
 
-    // const addReplies = (reply) => {
-    //     setReplies([reply, ...replies])
-    // }
+    const addReplies = (reply) => {
+        setReplies([reply, ...replies])
+    }
 
     const deleteComments = (deletedComment) => {
         fetch(`https://shoutout-for-deployment.onrender.com/comments/${deletedComment.id}`, {
@@ -105,7 +105,7 @@ function UserProvider({children}) {
 
     return (
         // <UserContext.Provider value={{ user, setUser, handleLogoutUser, comments, handleCommentLike, addComments, deleteComments, replies, handleReplyLike, addReplies, updateComments, deleteReplyUser, followers, followed, setFollowed }}>
-        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments, addComments, handleReplyLike, deleteReplyUser }}>    
+        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments, addComments, handleReplyLike, deleteReplyUser, updateComments, addReplies }}>    
             {children}
         </UserContext.Provider>
     )

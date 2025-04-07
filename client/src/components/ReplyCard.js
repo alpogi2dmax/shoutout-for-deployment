@@ -71,7 +71,7 @@ function ReplyCard({reply, updateReplies, deleteReply}) {
 
     return (
         <div className='reply-card'>
-            <Link to={reply.replier.id === user.id ? '/user-settings' : `/users/${reply.replier.id}`}>
+            {/* <Link to={reply.replier.id === user.id ? '/user-settings' : `/users/${reply.replier.id}`}> */}
                 <div className='reply-header'>
                     <img className='reply-pic' src={reply.replier.profile_pic} alt='Profile' />
                     <div className='user-info'>
@@ -79,7 +79,7 @@ function ReplyCard({reply, updateReplies, deleteReply}) {
                         <small className='reply-date'>{formattedDate}</small>
                     </div>
                 </div>
-            </Link>
+            {/* </Link> */}
             <div className='reply-content'>
                 <p>{reply.reply}</p>
             </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import ReplyList from "./ReplyList"
-// import CreateReply from "./CreateReply"
+import CreateReply from "./CreateReply"
 import { UserContext } from "../context/user"
 import { CommentContext } from "../context/comment"
 
@@ -150,7 +150,7 @@ function CommentPage() {
                     }
                 </div>
             </div>
-            {/* <CreateReply comment={comment} setComment={setComment}/> */}
+            <CreateReply comment={comment} setComment={setComment}/>
             <ReplyList replies={comment.replies} updateComment={updateComment}/>
         </div>
     )
