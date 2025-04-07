@@ -150,8 +150,8 @@ function CommentPage() {
                     }
                 </div>
             </div>
-            {/* <CreateReply comment={comment} setComment={setComment}/>
-            <ReplyList replies={comment.replies} updateComment={updateComment}/> */}
+            <CreateReply comment={comment} setComment={setComment}/>
+            <ReplyList replies={comment.replies} updateComment={updateComment}/>
         </div>
     )
 }
