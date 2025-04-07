@@ -14,7 +14,7 @@ function Home() {
         return (
             <div>
                 <h1>Hello {user.first_name}!</h1>
-                {/* <CreateComment /> */}
+                <CreateComment />
                 <CommentList />
             </div>
         )
