@@ -34,7 +34,6 @@ function CommentPage() {
     const handleLikeClick = () => {
         if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user.id)) {
             const like = comment.likes.find(x => x.comment_liker.id === user.id)
-            console.log(like)
             fetch(`https://shoutout-for-deployment.onrender.com/likes/${like.id}`, {
                 method: "DELETE",
             })
@@ -55,24 +54,24 @@ function CommentPage() {
                 liked_comment_id: comment.id
             }
             console.log(newLike)
-            // fetch('https://shoutout-for-deployment.onrender.com/likes', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content_type': 'application/json'
-            //     },
-            //     body: JSON.stringify(values, null, 2),
-            // })
-            // .then((r) => r.json())
-            // .then(like => {
-            //     const updatedComment = {
-            //         ...comment,
-            //         likes: [...comment.likes, like]
-            //     }
-            //     updateComments(updatedComment)
-            //     setComment(updatedComment)
-            //     handleCommentLike(updatedComment)
+            fetch('https://shoutout-for-deployment.onrender.com/likes', {
+                method: 'POST',
+                headers: {
+                    'Content_type': 'application/json'
+                },
+                body: JSON.stringify(newLike, null, 2),
+            })
+            .then((r) => r.json())
+            .then(like => {
+                const updatedComment = {
+                    ...comment,
+                    likes: [...comment.likes, like]
+                }
+                updateComments(updatedComment)
+                setComment(updatedComment)
+                handleCommentLike(updatedComment)
                 
-            // })
+            })
         }
     }
 
@@ -89,7 +88,6 @@ function CommentPage() {
         return <p>Loading...</p>
     }
 
-    console.log(comment)
 
     const createdDate = new Date(comment.created_date)
 
