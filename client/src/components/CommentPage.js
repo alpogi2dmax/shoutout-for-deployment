@@ -75,14 +75,14 @@ function CommentPage() {
         }
     }
 
-    // const updateComment = (updatedReplies) => {
-    //     const updatedComment = {
-    //         ...comment, replies: updatedReplies
-    //     }
-    //     console.log(updatedComment)
-    //     updateComments(updatedComment)
-    //     setComment(updatedComment)
-    // }
+    const updateComment = (updatedReplies) => {
+        const updatedComment = {
+            ...comment, replies: updatedReplies
+        }
+        console.log(updatedComment)
+        updateComments(updatedComment)
+        setComment(updatedComment)
+    }
 
     if (loading) {
         return <p>Loading...</p>
