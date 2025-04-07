@@ -26,7 +26,7 @@ function CreateComment() {
             const { resetForm } = formHelpers
             values.created_date = new Date().toISOString();
             values.commenter_id = user.id;
-            fetch("/comments", {
+            fetch("https://shoutout-for-deployment.onrender.com/comments", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
