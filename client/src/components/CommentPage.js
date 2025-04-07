@@ -34,6 +34,7 @@ function CommentPage() {
     const handleLikeClick = () => {
         if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user.id)) {
             const like = comment.likes.find(x => x.comment_liker.id === user.id)
+            console.log(like)
             fetch(`https://shoutout-for-deployment.onrender.com/likes/${like.id}`, {
                 method: "DELETE",
             })
@@ -53,24 +54,25 @@ function CommentPage() {
                 comment_liker_id: user.id,
                 liked_comment_id: comment.id
             }
-            fetch('https://shoutout-for-deployment.onrender.com/likes', {
-                method: 'POST',
-                headers: {
-                    'Content_type': 'application/json'
-                },
-                body: JSON.stringify(values, null, 2),
-            })
-            .then((r) => r.json())
-            .then(like => {
-                const updatedComment = {
-                    ...comment,
-                    likes: [...comment.likes, like]
-                }
-                updateComments(updatedComment)
-                setComment(updatedComment)
-                handleCommentLike(updatedComment)
+            console.log('values')
+            // fetch('https://shoutout-for-deployment.onrender.com/likes', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content_type': 'application/json'
+            //     },
+            //     body: JSON.stringify(values, null, 2),
+            // })
+            // .then((r) => r.json())
+            // .then(like => {
+            //     const updatedComment = {
+            //         ...comment,
+            //         likes: [...comment.likes, like]
+            //     }
+            //     updateComments(updatedComment)
+            //     setComment(updatedComment)
+            //     handleCommentLike(updatedComment)
                 
-            })
+            // })
         }
     }
 
