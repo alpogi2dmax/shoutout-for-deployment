@@ -50,11 +50,11 @@ function CommentPage() {
             
         
         } else {
-            let values = {
+            const newLike = {
                 comment_liker_id: user.id,
                 liked_comment_id: comment.id
             }
-            console.log('values')
+            console.log(newLike)
             // fetch('https://shoutout-for-deployment.onrender.com/likes', {
             //     method: 'POST',
             //     headers: {
