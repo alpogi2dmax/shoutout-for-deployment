@@ -104,7 +104,7 @@ function CommentPage() {
         setTimeout(() => {
             console.log('To be redirected')
             navigate('/')
-        },3000)
+        },2000)
     }
 
     // console.log(comment)
