@@ -104,13 +104,13 @@ function UserPage() {
                 <img className='user-profile-pic' src={userPage.profile_pic} />
                 <div className='userpage-info'>
                     <p>{userPage.first_name} {userPage.last_name}</p>
-                    {/* {!isFollowing ? <button className='button' onClick={handleFollowClick}>Follow</button> : <button className='button' onClick={handleUnfollowClick}>UnFollow</button>} */}
+                    {!isFollowing ? <button className='button' onClick={handleFollowClick}>Follow</button> : <button className='button' onClick={handleUnfollowClick}>UnFollow</button>}
                 </div>
                 {/* <p>{userPage.first_name} {userPage.last_name}</p>
                 {!isFollowing ? <button className='button' onClick={handleFollowClick}>Follow</button> : <button className='button' onClick={handleUnfollowClick}>UnFollow</button>} */}
             </div>
-            {/* {userPage && <UserNavBar userPage={userPage}/>}
-            <Outlet /> */}
+            {userPage && <UserNavBar userPage={userPage}/>}
+            <Outlet />
         </div>
     )
 }
