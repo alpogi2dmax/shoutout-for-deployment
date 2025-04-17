@@ -21,7 +21,7 @@ function UserPage() {
     console.log(userPage)
 
     useEffect(() => {
-        fetch(`/users/${id}`)
+        fetch(`https://shoutout-for-deployment.onrender.com/users/${id}`)
         .then(r => r.json())
         .then(data => {
             updateUserPage(data)
