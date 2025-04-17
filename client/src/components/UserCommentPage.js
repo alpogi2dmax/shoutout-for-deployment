@@ -1,7 +1,7 @@
 // import { useLocation } from "react-router-dom"
 import { useContext, useState } from "react"
 import { UserPageContext } from "../context/userpage"
-// import UserCommentCard from "./UserCommentCard"
+import UserCommentCard from "./UserCommentCard"
 
 function UserCommentPage() {
 
@@ -10,23 +10,23 @@ function UserCommentPage() {
     const { userPage, updateUserPage } = useContext(UserPageContext)
     const [comments, setComments] = useState(userPage.comments)
 
-    // const sortedComments = [...comments].sort((a, b) => {
-    //     const dateA = new Date(a.created_date)
-    //     const dateB = new Date(b.created_date)
-    //     return dateB - dateA
+    const sortedComments = [...comments].sort((a, b) => {
+        const dateA = new Date(a.created_date)
+        const dateB = new Date(b.created_date)
+        return dateB - dateA
 
-    // })
+    })
 
-    // const handleUpdateComments = (updatedComment) => {
-    //     const updatedComments = comments.map(c =>
-    //         c.id === updatedComment.id ? updatedComment : c
-    //     )
-    //     setComments(updatedComments)
-    //     const updatedUser = {
-    //         ...userPage, comments: updatedComments
-    //     }
-    //     updateUserPage(updatedUser)
-    // }
+    const handleUpdateComments = (updatedComment) => {
+        const updatedComments = comments.map(c =>
+            c.id === updatedComment.id ? updatedComment : c
+        )
+        setComments(updatedComments)
+        const updatedUser = {
+            ...userPage, comments: updatedComments
+        }
+        updateUserPage(updatedUser)
+    }
 
 
 
@@ -34,9 +34,9 @@ function UserCommentPage() {
 
         <div>
             TEST
-            {/* {sortedComments.map(comment => (
+            {sortedComments.map(comment => (
                 <UserCommentCard key={comment.id} comment={comment} onUpdateComments={handleUpdateComments}/>
-            ))} */}
+            ))}
         </div>
     )
 }
