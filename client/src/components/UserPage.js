@@ -25,7 +25,7 @@ function UserPage() {
         .then(r => r.json())
         .then(data => {
             updateUserPage(data)
-            navigate(`/users/${id}/comments`);
+            // navigate(`/users/${id}/comments`);
         })
     }, [id])
 
