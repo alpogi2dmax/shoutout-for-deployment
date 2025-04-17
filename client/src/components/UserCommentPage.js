@@ -33,7 +33,7 @@ function UserCommentPage() {
     return (
 
         <div>
-            TEST
+            {/* TEST */}
             {sortedComments.map(comment => (
                 <UserCommentCard key={comment.id} comment={comment} onUpdateComments={handleUpdateComments}/>
             ))}
