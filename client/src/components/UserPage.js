@@ -13,19 +13,15 @@ function UserPage() {
 
     const isFollowing = userPage && userPage.followers.map(follower => follower.id).includes(user.id)
 
-    console.log(isFollowing)
-
     // const [ userPage, setUser ] = useState('')
     const navigate = useNavigate()
-
-    console.log(userPage)
 
     useEffect(() => {
         fetch(`https://shoutout-for-deployment.onrender.com/users/${id}`)
         .then(r => r.json())
         .then(data => {
             updateUserPage(data)
-            // navigate(`/users/${id}/comments`);
+            navigate(`/users/${id}/comments`);
         })
     }, [id])
 
