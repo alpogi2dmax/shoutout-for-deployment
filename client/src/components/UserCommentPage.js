@@ -1,7 +1,7 @@
 // import { useLocation } from "react-router-dom"
 import { useContext, useState } from "react"
 import { UserPageContext } from "../context/userpage"
-import UserCommentCard from "./UserCommentCard"
+// import UserCommentCard from "./UserCommentCard"
 
 function UserCommentPage() {
 
