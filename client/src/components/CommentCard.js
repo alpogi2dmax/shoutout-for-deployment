@@ -220,7 +220,7 @@ function CommentCard({comment}) {
 
     return (
         <div className='shoutout-card'>
-             {/* <Link className='link-comment-style' to={comment.commenter.id === user.id ? '/user-settings' : `/users/${comment.commenter.id}`}> */}
+             <Link className='link-comment-style' to={comment.commenter.id === user.id ? '/user-settings' : `/users/${comment.commenter.id}`}>
                 <div className='shoutout-header'>
                     <img className='shoutout-pic' src={comment.commenter.profile_pic} alt='Profile' />
                     <div className='user-info'>
@@ -228,7 +228,7 @@ function CommentCard({comment}) {
                         <small className='shoutout-date'>{formattedDate}</small>
                     </div>
                 </div>
-            {/* </Link> */}
+            </Link>
             <div className='shoutout-content'>
                 <Link className='link-comment-style' to={`/comments/${comment.id}`}>
                     <p>{comment.comment}</p>
