@@ -41,24 +41,25 @@ function UserCommentCard({comment, onUpdateComments}) {
                 comment_liker_id: user.id,
                 liked_comment_id: comment.id
             }
-            fetch('https://shoutout-for-deployment.onrender.com/likes', {
-                method: 'POST',
-                headers: {
-                    'Content_type': 'application/json'
-                },
-                body: JSON.stringify(values, null, 2),
-            })
-            .then((r) => r.json())
-            .then(like => {
-                const updatedComment = {
-                    ...comment,
-                    likes: [...comment.likes, like]
-                }
-                updateComments(updatedComment)
-                onUpdateComments(updatedComment)
-                handleCommentLike(updatedComment)
+            console.log(values)
+            // fetch('https://shoutout-for-deployment.onrender.com/likes', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content_type': 'application/json'
+            //     },
+            //     body: JSON.stringify(values, null, 2),
+            // })
+            // .then((r) => r.json())
+            // .then(like => {
+            //     const updatedComment = {
+            //         ...comment,
+            //         likes: [...comment.likes, like]
+            //     }
+            //     updateComments(updatedComment)
+            //     onUpdateComments(updatedComment)
+            //     handleCommentLike(updatedComment)
                 
-            })
+            // })
         }
     }
 
