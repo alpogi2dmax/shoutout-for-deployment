@@ -105,7 +105,7 @@ function UserProvider({children}) {
 
     return (
         // <UserContext.Provider value={{ user, setUser, handleLogoutUser, comments, handleCommentLike, addComments, deleteComments, replies, handleReplyLike, addReplies, updateComments, deleteReplyUser, followers, followed, setFollowed }}>
-        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments, addComments, handleReplyLike, deleteReplyUser, updateComments, addReplies }}>    
+        <UserContext.Provider value={{ user, comments, replies, followers, followed, setUser, handleLogoutUser, handleCommentLike, deleteComments, addComments, handleReplyLike, deleteReplyUser, updateComments, addReplies, setFollowed }}>    
             {children}
         </UserContext.Provider>
     )
