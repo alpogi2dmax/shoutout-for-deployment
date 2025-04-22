@@ -13,7 +13,7 @@ function UserPageFollowerCard({follower}) {
             follower_id: user.id,
             followed_id: follower.id
         }
-        fetch("/follows", {
+        fetch("https://shoutout-for-deployment.onrender.com/follows", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -55,7 +55,7 @@ function UserPageFollowerCard({follower}) {
             follower_id: user.id,
             followed_id: follower.id
         }
-        fetch('/follow_delete', {
+        fetch('https://shoutout-for-deployment.onrender.com/follow_delete', {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
