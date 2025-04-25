@@ -18,7 +18,7 @@ function UserPageFollowingCard({followedUserPage}) {
         fetch("https://shoutout-for-deployment.onrender.com/follows", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(values, null, 2),
         })

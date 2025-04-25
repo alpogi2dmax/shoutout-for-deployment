@@ -13,7 +13,7 @@ function UserSettingsFollowerCard({follower}) {
             follower_id: user.id,
             followed_id: follower.id
         }
-        fetch("https://shoutout-for-deployment.onrender.com/likes/follows", {
+        fetch("https://shoutout-for-deployment.onrender.com/follows", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -48,7 +48,31 @@ function UserSettingsFollowerCard({follower}) {
     }
 
     const handleUnfollowClick = () => {
-        console.log('test')
+        const follow = {
+            follower_id: user.id,
+            followed_id: follower.id
+        }
+        fetch('https://shoutout-for-deployment.onrender.com/follow_delete', {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(follow)
+        })
+        .then(() => {
+            // const updatedFollowers = userPage.followers.filter(follower => follower.id !== user.id)
+            // const updatedUserPage = {
+            //     ...userPage,
+            //     followers: updatedFollowers
+            // }
+            const updatedFollowed = user.followed.filter(followed => followed.id !== follower.id)
+            // const updatedUser = {
+            //     ...user,
+            //     followed: updatedFollowed
+            // }
+            // updateUserPage(updatedUserPage)
+            setFollowed(updatedFollowed)
+        })
     }
 
     // const handleUnfollowClick = () => {
