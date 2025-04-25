@@ -41,27 +41,27 @@ function CommentProvider({children}) {
             setComments(comments.filter(comment => comment.id !== deletedComment.id))
     }
 
-    // const handleReplyLikeComment = (updatedReply) => {
-    //     const targetComment = comments.find(comment => comment.id === updatedReply.comment.id)
-    //     const updatedReplies = targetComment.replies.map(reply => reply.id === updatedReply.id ? updatedReply : reply)
-    //     const updatedComment = {
-    //         ...targetComment,
-    //         replies: updatedReplies
-    //     }
-    //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
-    //     setComments(updatedComments)
-    // }
+    const handleReplyLikeComment = (updatedReply) => {
+        const targetComment = comments.find(comment => comment.id === updatedReply.comment.id)
+        const updatedReplies = targetComment.replies.map(reply => reply.id === updatedReply.id ? updatedReply : reply)
+        const updatedComment = {
+            ...targetComment,
+            replies: updatedReplies
+        }
+        const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
+        setComments(updatedComments)
+    }
 
-    // const deleteReplyComment = (deletedReply) => {
-    //     const targetComment = comments.find(comment => comment.id === deletedReply.comment.id)
-    //     const updatedReplies = targetComment.replies.filter(reply => reply.id !== deletedReply.id)
-    //     const updatedComment = {
-    //         targetComment,
-    //         replies: updatedReplies
-    //     }
-    //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
-    //     setComments(updatedComments)
-    // }
+    const deleteReplyComment = (deletedReply) => {
+        const targetComment = comments.find(comment => comment.id === deletedReply.comment.id)
+        const updatedReplies = targetComment.replies.filter(reply => reply.id !== deletedReply.id)
+        const updatedComment = {
+            targetComment,
+            replies: updatedReplies
+        }
+        const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
+        setComments(updatedComments)
+    }
 
     // const replyLike = (likedReply) => {
     //     console.log(user)
@@ -87,7 +87,7 @@ function CommentProvider({children}) {
 
     return (
         // <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComments, deleteComment, handleLike, handleReplyLikeComment, deleteReplyComment }}>
-        <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComment, handleLike}}>
+        <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComment, handleLike, handleReplyLikeComment, deleteReplyComment}}>
             {children}
         </CommentContext.Provider>
     )

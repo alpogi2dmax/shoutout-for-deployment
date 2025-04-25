@@ -20,7 +20,7 @@ function UserSettingsCommentCard({comment}) {
     const handleLikeClick = () => {
         if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user.id)) {
             const like = comment.likes.find(x => x.comment_liker.id === user.id)
-            fetch(`/likes/${like.id}`, {
+            fetch(`https://shoutout-for-deployment.onrender.com/likes/${like.id}`, {
                 method: "DELETE",
             })
             .then(() => {
@@ -36,7 +36,7 @@ function UserSettingsCommentCard({comment}) {
                 comment_liker_id: user.id,
                 liked_comment_id: comment.id
             }
-            fetch('/likes', {
+            fetch('https://shoutout-for-deployment.onrender.com/likes', {
                 method: 'POST',
                 headers: {
                     'Content_type': 'application/json'

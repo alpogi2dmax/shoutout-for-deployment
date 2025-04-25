@@ -8,10 +8,10 @@ function UserSettings() {
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     // Redirect to 'user-comments' when UserSettings is accessed
-    //     navigate('/user-settings/user-comments');
-    // }, [user, navigate]);
+    useEffect(() => {
+        // Redirect to 'user-comments' when UserSettings is accessed
+        navigate('/user-settings/user-comments');
+    }, [user, navigate]);
 
 
     if (!user) {return <div>Loading...</div>}
