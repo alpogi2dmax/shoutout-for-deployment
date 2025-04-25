@@ -10,7 +10,7 @@ import UserSettings from "./components/UserSettings";
 import UserSettingsComments from "./components/UserSettingsComments";
 import UserSettingsReplies from "./components/UserSettingsReplies";
 import UserSettingsFollowers from "./components/UserSettingsFollowers";
-// import UserSettingsFollowing from "./components/UserSettingsFollowing";
+import UserSettingsFollowing from "./components/UserSettingsFollowing";
 // import UserSettingsEdit from "./components/UserSettingsEdit";
 // import Explore from "./components/Explore";
 
@@ -47,10 +47,10 @@ const routes = [
                         path: 'user-followers',
                         element: <UserSettingsFollowers />
                     },
-                //     {
-                //         path: 'user-following',
-                //         element: <UserSettingsFollowing />
-                //     }
+                    {
+                        path: 'user-following',
+                        element: <UserSettingsFollowing />
+                    }
                 //     // {
                 //     //     path: 'edit',
                 //     //     element: <UserSettingsEdit />

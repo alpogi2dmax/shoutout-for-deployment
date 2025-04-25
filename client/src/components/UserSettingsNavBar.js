@@ -15,7 +15,7 @@ function UserSettingsNavBar() {
             <Link className='link-style' to={'/user-settings/user-comments'}>{comments.length} Comments</Link>
             <Link className='link-style' to={'/user-settings/user-replies'}>{replies.length} Replies</Link>
             <Link className='link-style' to={'/user-settings/user-followers'}>{followers.length} Followers</Link>
-            {/* <Link className='link-style' to={'/user-settings/user-following'}>{followed.length} Following</Link> */}
+            <Link className='link-style' to={'/user-settings/user-following'}>{followed.length} Following</Link>
         </div>
     )
 }
