@@ -27,7 +27,7 @@ function UserSettingsEditProfile() {
             },
             validationSchema: formSchema,
             onSubmit: (values) => {
-                fetch(`users/${user.id}`, {
+                fetch(`https://shoutout-for-deployment.onrender.com/users/${user.id}`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json"

@@ -30,7 +30,7 @@ function UserSettingsChangePassword() {
             validationSchema: formSchema,
             onSubmit: (values) => {
                 console.log("Submitting:", values); // Debugging line
-                fetch(`/users/${user.id}`, {
+                fetch(`https://shoutout-for-deployment.onrender.com/users/${user.id}`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json"
