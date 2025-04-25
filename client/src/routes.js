@@ -31,33 +31,33 @@ const routes = [
                 path: '/comments/:id',
                 element: <CommentPage />
             },
-            // {
-            //     path: '/user-settings',
-            //     element: <UserSettings />,
-    //             children: [
-    //                 {
-    //                     path: 'user-comments',
-    //                     element: <UserSettingsComments />
-    //                 },
-    //                 {
-    //                     path: 'user-replies',
-    //                     element: <UserSettingsReplies />
-    //                 },
-    //                 {
-    //                     path: 'user-followers',
-    //                     element: <UserSettingsFollowers />
-    //                 },
+            {
+                path: '/user-settings',
+                element: <UserSettings />,
+                // children: [
+                //     {
+                //         path: 'user-comments',
+                //         element: <UserSettingsComments />
+                //     },
+                //     {
+                //         path: 'user-replies',
+                //         element: <UserSettingsReplies />
+                //     },
+                //     {
+                //         path: 'user-followers',
+                //         element: <UserSettingsFollowers />
+                //     },
                     
-    //                 {
-    //                     path: 'user-following',
-    //                     element: <UserSettingsFollowing />
-    //                 }
-    //                 // {
-    //                 //     path: 'edit',
-    //                 //     element: <UserSettingsEdit />
-    //                 // }
-    //             ]
-            // },
+                //     {
+                //         path: 'user-following',
+                //         element: <UserSettingsFollowing />
+                //     }
+                //     // {
+                //     //     path: 'edit',
+                //     //     element: <UserSettingsEdit />
+                //     // }
+                // ]
+            },
             {
                 path: '/users/:id',
                 element: <UserPage />,
