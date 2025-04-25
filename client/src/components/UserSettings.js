@@ -18,9 +18,9 @@ function UserSettings() {
 
     if (!user) {return <div>Loading...</div>}
 
-    // const handleEditClick = () => {
-    //     navigate('/user-settings-edit')
-    // }
+    const handleEditClick = () => {
+        navigate('/user-settings-edit')
+    }
 
     return (
         <div>
@@ -28,7 +28,7 @@ function UserSettings() {
                 <img className='user-profile-pic' src={user.profile_pic} />
                 <div className='userpage-info'>
                     <p>{user.first_name} {user.last_name}</p>
-                    {/* <button className='button' onClick={handleEditClick}>Edit</button> */}
+                    <button className='button' onClick={handleEditClick}>Edit</button>
                 </div>
             </div>
             <UserSettingsNavBar />
