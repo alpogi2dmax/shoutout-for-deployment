@@ -44,7 +44,7 @@ function UserSettingsReplyCard({reply}) {
             fetch('https://shoutout-for-deployment.onrender.com/reply_likes', {
                 method: 'POST',
                 headers: {
-                    'Content_type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(values, null, 2),
             })

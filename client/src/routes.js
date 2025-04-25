@@ -9,7 +9,7 @@ import UserPageFollowing from "./components/UserPageFollowing";
 import UserSettings from "./components/UserSettings";
 import UserSettingsComments from "./components/UserSettingsComments";
 import UserSettingsReplies from "./components/UserSettingsReplies";
-// import UserSettingsFollowers from "./components/UserSettingsFollowers";
+import UserSettingsFollowers from "./components/UserSettingsFollowers";
 // import UserSettingsFollowing from "./components/UserSettingsFollowing";
 // import UserSettingsEdit from "./components/UserSettingsEdit";
 // import Explore from "./components/Explore";
@@ -43,11 +43,10 @@ const routes = [
                         path: 'user-replies',
                         element: <UserSettingsReplies />
                     },
-                //     {
-                //         path: 'user-followers',
-                //         element: <UserSettingsFollowers />
-                //     },
-                    
+                    {
+                        path: 'user-followers',
+                        element: <UserSettingsFollowers />
+                    },
                 //     {
                 //         path: 'user-following',
                 //         element: <UserSettingsFollowing />
