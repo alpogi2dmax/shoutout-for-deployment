@@ -8,7 +8,7 @@ function UserNavBar({userPage}) {
             <Link className='link-style' to={`/users/${id}/comments`}>{userPage.comments.length} Comments</Link>
             <Link className='link-style' to={`/users/${id}/replies`}>{userPage.replies.length} Replies</Link>
             <Link className='link-style' to={`/users/${id}/followers`}>{userPage.followers.length} Followers</Link>
-            {/* <Link className='link-style' to={`/users/${id}/following`}>{userPage.followed.length} Following</Link> */}
+            <Link className='link-style' to={`/users/${id}/following`}>{userPage.followed.length} Following</Link>
         </div>
     );
 }

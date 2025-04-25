@@ -5,7 +5,7 @@ import UserPage from "./components/UserPage";
 import UserCommentPage from "./components/UserCommentPage";
 import UserReplyPage from "./components/UserReplyPage";
 import UserPageFollowers from "./components/UserPageFollowers";
-// import UserPageFollowing from "./components/UserPageFollowing";
+import UserPageFollowing from "./components/UserPageFollowing";
 // import UserSettings from "./components/UserSettings";
 // import UserSettingsComments from "./components/UserSettingsComments";
 // import UserSettingsReplies from "./components/UserSettingsReplies";
@@ -74,10 +74,10 @@ const routes = [
                         path: 'followers',
                         element: <UserPageFollowers />
                     },
-    //                 {
-    //                     path: 'following',
-    //                     element: <UserPageFollowing />
-    //                 }
+                    {
+                        path: 'following',
+                        element: <UserPageFollowing />
+                    }
                 ]
             },
     //         {
