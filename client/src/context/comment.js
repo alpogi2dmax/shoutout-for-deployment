@@ -28,10 +28,10 @@ function CommentProvider({children}) {
         setComments(updatedComments)
     }
 
-    // const handleLike = (updatedComment) => {
-    //     const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
-    //     setComments(updatedComments)
-    // }
+    const handleLike = (updatedComment) => {
+        const updatedComments = comments.map(comment => comment.id === updatedComment.id ? updatedComment : comment)
+        setComments(updatedComments)
+    }
 
     // const deleteComments = (commentId) => {
     //     setComments(comments.filter(comment => comment.id !== commentId))
@@ -87,10 +87,10 @@ function CommentProvider({children}) {
 
     return (
         // <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComments, deleteComment, handleLike, handleReplyLikeComment, deleteReplyComment }}>
-        <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComment}}>
+        <CommentContext.Provider value={{comments, setComments, handleLogoutComments, updateComments, deleteComment, handleLike}}>
             {children}
         </CommentContext.Provider>
     )
 }
 
-export { CommentContext, CommentProvider}
+export { CommentContext, CommentProvider }

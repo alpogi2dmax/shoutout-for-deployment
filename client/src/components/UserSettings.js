@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import { UserContext } from "../context/user"
-// import UserSettingsNavBar from "./UserSettingsNavBar"
+import UserSettingsNavBar from "./UserSettingsNavBar"
 import { Outlet, useNavigate } from "react-router-dom"
 
 function UserSettings() {
@@ -29,8 +29,8 @@ function UserSettings() {
                     {/* <button className='button' onClick={handleEditClick}>Edit</button> */}
                 </div>
             </div>
-            {/* <UserSettingsNavBar /> */}
-            {/* <Outlet /> */}
+            <UserSettingsNavBar />
+            <Outlet />
         </div>
     )
 }
