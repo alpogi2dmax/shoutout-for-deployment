@@ -6,7 +6,7 @@ import UserCommentPage from "./components/UserCommentPage";
 import UserReplyPage from "./components/UserReplyPage";
 import UserPageFollowers from "./components/UserPageFollowers";
 import UserPageFollowing from "./components/UserPageFollowing";
-// import UserSettings from "./components/UserSettings";
+import UserSettings from "./components/UserSettings";
 // import UserSettingsComments from "./components/UserSettingsComments";
 // import UserSettingsReplies from "./components/UserSettingsReplies";
 // import UserSettingsFollowers from "./components/UserSettingsFollowers";
