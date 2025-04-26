@@ -145,22 +145,22 @@ api.add_resource(UsersBySearch,'/users/<string:search>')
 
 class Comments(Resource):
 
-    # def get(self):
-
-    #     user = User.query.filter_by(id=session['user_id']).first()
-    #     comments = Comment.query.order_by(Comment.created_date.desc()).all()
-    #     user_followed = [followed.id for followed in user.followed]
-    #     user_followed.append(user.id)
-    #     filtered_comments = [comment for comment in comments if comment.commenter.id in user_followed]
-    #     # comments = Comment.query.all()
-    #     response = comments_schema.dump(filtered_comments), 200
-    #     return response
-    
     def get(self):
 
+        user = User.query.filter_by(id=session['user_id']).first()
         comments = Comment.query.order_by(Comment.created_date.desc()).all()
-        response = comments_schema.dump(comments), 200
+        user_followed = [followed.id for followed in user.followed]
+        user_followed.append(user.id)
+        filtered_comments = [comment for comment in comments if comment.commenter.id in user_followed]
+        # comments = Comment.query.all()
+        response = comments_schema.dump(filtered_comments), 200
         return response
+    
+    # def get(self):
+
+    #     comments = Comment.query.order_by(Comment.created_date.desc()).all()
+    #     response = comments_schema.dump(comments), 200
+    #     return response
     
     def post(self):
         try:
