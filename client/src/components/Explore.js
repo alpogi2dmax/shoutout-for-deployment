@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useContext } from "react"
 import { UserContext } from "../context/user"
 import ExplorePeopleList from "./ExplorePeopleList"
-// import ExploreCommentsList from "./ExploreCommentsList"
+import ExploreCommentsList from "./ExploreCommentsList"
 import Login from "./Login"
 
 function Explore() {
@@ -32,27 +32,27 @@ function Explore() {
                 .catch((error) => {
                     console.error('Fetch error:', error);
                 });
-            // fetch(`/comments/${search}`)
-            //     .then((r) => {
-            //         if (!r.ok) throw new Error('Network response was not ok');
-            //         return r.json();
-            //     })
-            //     .then((data) => {
-            //         console.log(data);
-            //         setComments(data)
-            //     })
-            //     .catch((error) => {
-            //         console.error('Fetch error:', error);
-            //     });
+            fetch(`/comments/${search}`)
+                .then((r) => {
+                    if (!r.ok) throw new Error('Network response was not ok');
+                    return r.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setComments(data)
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error);
+                });
         } else {
             console.log('Search term is empty');
         }
     };
 
-    // const deleteComment = (deletedComment) => {
-    //     let updatedComments = comments.filter(comment => comment.id !== deletedComment.id)
-    //     setComments(updatedComments)
-    // }
+    const deleteComment = (deletedComment) => {
+        let updatedComments = comments.filter(comment => comment.id !== deletedComment.id)
+        setComments(updatedComments)
+    }
 
     if (user) {
         return (
@@ -62,7 +62,7 @@ function Explore() {
                 <h2>People</h2>
                 <ExplorePeopleList people={people}/>
                 <h2>Comments</h2>
-                {/* <ExploreCommentsList comments={comments} deleteComment={deleteComment}/> */}
+                <ExploreCommentsList comments={comments} deleteComment={deleteComment}/>
     
             </div>
         )
