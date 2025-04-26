@@ -28,7 +28,6 @@ function ReplyCard({reply, updateReplies, deleteReply}) {
                     ...reply,
                     reply_likes: reply.reply_likes.filter(x => x.reply_liker.id !== user.id)
                 }
-                console.log(updatedReply)
                 updateReplies(updatedReply)
                 handleReplyLike(updatedReply)
             })  

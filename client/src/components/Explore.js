@@ -26,7 +26,6 @@ function Explore() {
                     return r.json();
                 })
                 .then((data) => {
-                    console.log(data);
                     setPeople(data);
                 })
                 .catch((error) => {
@@ -38,7 +37,6 @@ function Explore() {
                     return r.json();
                 })
                 .then((data) => {
-                    console.log(data);
                     setComments(data)
                 })
                 .catch((error) => {

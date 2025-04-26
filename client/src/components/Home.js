@@ -8,8 +8,6 @@ function Home() {
 
     const { user } = useContext(UserContext)
 
-    console.log(user)
-
     if (user) {
         return (
             <div>

@@ -7,9 +7,6 @@ function UserSettingsNavBar() {
 
     const { comments, replies, user, followers, followed } = useContext(UserContext)
 
-    console.log(comments)
-    console.log(user)
-
     return (
         <div className='navbar-links'>
             <Link className='link-style' to={'/user-settings/user-comments'}>{comments.length} Comments</Link>

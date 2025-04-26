@@ -22,13 +22,6 @@ function UserSettingsFollowerCard({follower}) {
         })
         .then((r) => r.json())
         .then(() => {
-            // const newFollower = {
-            //     id: user.id,
-            //     first_name: user.first_name,
-            //     last_name: user.last_name,
-            //     profile_pic: user.profile_pic,
-            //     username: user.username
-            // }
             const newFollowed = {
                 id: follower.id,
                 first_name: follower.first_name,
@@ -36,13 +29,7 @@ function UserSettingsFollowerCard({follower}) {
                 profile_pic: follower.profile_pic,
                 username: follower.username
             }
-            // const updatedUserPage = {
-            //     ...userPage,
-            //     followers: [...userPage.followers, newFollower]
-            // }
             const updatedFollowed = [newFollowed, ...followed]
-
-            // updateUserPage(updatedUserPage)
             setFollowed(updatedFollowed)
         })
     }
@@ -60,48 +47,10 @@ function UserSettingsFollowerCard({follower}) {
             body: JSON.stringify(follow)
         })
         .then(() => {
-            // const updatedFollowers = userPage.followers.filter(follower => follower.id !== user.id)
-            // const updatedUserPage = {
-            //     ...userPage,
-            //     followers: updatedFollowers
-            // }
             const updatedFollowed = user.followed.filter(followed => followed.id !== follower.id)
-            // const updatedUser = {
-            //     ...user,
-            //     followed: updatedFollowed
-            // }
-            // updateUserPage(updatedUserPage)
             setFollowed(updatedFollowed)
         })
     }
-
-    // const handleUnfollowClick = () => {
-    //     const follow = {
-    //         follower_id: user.id,
-    //         followed_id: follower.id
-    //     }
-    //     fetch('/follow_delete', {
-    //         method: "DELETE",
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(follow)
-    //     })
-    //     .then(() => {
-    //         // const updatedFollowers = userPage.followers.filter(follower => follower.id !== user.id)
-    //         // const updatedUserPage = {
-    //         //     ...userPage,
-    //         //     followers: updatedFollowers
-    //         // }
-    //         const updatedFollowed = user.followed.filter(followed => followed.id !== follower.id)
-    //         const updatedUser = {
-    //             ...user,
-    //             followed: updatedFollowed
-    //         }
-    //         // updateUserPage(updatedUserPage)
-    //         setUser(updatedUser)
-    //     })
-    // }
     
     return (
         <div className='follow-card'>

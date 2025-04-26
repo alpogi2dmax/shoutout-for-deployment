@@ -17,12 +17,8 @@ function UserReplyCard({reply, handleUpdateReplies}) {
 
     const handleLikeClick = () => {
         const reply_likes = reply.reply_likes
-        console.log(`User ID: ${user.id}`)
-        console.log(reply_likes)
         if (reply_likes.map(like => like.reply_liker.id).includes(user.id)) {
-            console.log('user liked this reply')
             const reply_like = reply_likes.find(like => like.reply_liker.id === user.id)
-            console.log(reply_like)
             fetch(`https://shoutout-for-deployment.onrender.com/reply_likes/${reply_like.id}`, {
                 method: "DELETE",
             })
@@ -31,11 +27,9 @@ function UserReplyCard({reply, handleUpdateReplies}) {
                     ...reply,
                     reply_likes: reply.reply_likes.filter(x => x.reply_liker.id !== user.id)
                 }
-                console.log(updatedReply)
                 handleUpdateReplies(updatedReply)
             })
         } else {
-            console.log('user did not like this reply')
             let values = {
                 reply_liker_id: user.id,
                 liked_reply_id: reply.id

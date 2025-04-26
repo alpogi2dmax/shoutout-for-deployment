@@ -107,8 +107,6 @@ function CommentPage() {
         },2000)
     }
 
-    // console.log(comment)
-
     return (
         <div>
             <div className='shoutout-card'>

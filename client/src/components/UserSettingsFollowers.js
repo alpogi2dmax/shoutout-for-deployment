@@ -8,8 +8,6 @@ function UserSettingsFollowers() {
 
     if (!followers) {return (<div>Loading...</div>)}
 
-    console.log(followers)
-
     return (
         <div>
             {followers.map(follower => (

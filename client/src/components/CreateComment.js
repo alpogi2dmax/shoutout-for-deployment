@@ -35,7 +35,6 @@ function CreateComment() {
             })
             .then((r) => r.json())
             .then((comment) => {
-                console.log(comment)
                 setComments([comment, ...comments])
                 addComments(comment)
                 resetForm()

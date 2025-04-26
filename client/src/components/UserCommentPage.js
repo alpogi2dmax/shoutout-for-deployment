@@ -5,8 +5,6 @@ import UserCommentCard from "./UserCommentCard"
 
 function UserCommentPage() {
 
-    // const location = useLocation()
-    // const { user, updateUser } = location.state || {}
     const { userPage, updateUserPage } = useContext(UserPageContext)
     const [comments, setComments] = useState(userPage.comments)
 
@@ -33,7 +31,6 @@ function UserCommentPage() {
     return (
 
         <div>
-            {/* TEST */}
             {sortedComments.map(comment => (
                 <UserCommentCard key={comment.id} comment={comment} onUpdateComments={handleUpdateComments}/>
             ))}

@@ -19,14 +19,8 @@ function UserSettingsFollowedCard({followedUser}) {
             body: JSON.stringify(follow)
         })
         .then(() => {
-            // const updatedFollowers = userPage.followers.filter(follower => follower.id !== user.id)
-            // const updatedUserPage = {
-            //     ...userPage,
-            //     followers: updatedFollowers
-            // }
-            const updatedFollowed = followed.filter(followed => followed.id !== followedUser.id)
             
-            // updateUserPage(updatedUserPage)
+            const updatedFollowed = followed.filter(followed => followed.id !== followedUser.id)
             setFollowed(updatedFollowed)
         })
     }

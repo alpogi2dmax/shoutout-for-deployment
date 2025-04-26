@@ -14,13 +14,10 @@ function CommentList() {
             fetch('https://shoutout-for-deployment.onrender.com/comments', {
                 credentials: 'include'
             })
-            // fetch('http://localhost:5000/comments')
             .then(r => r.json())
             .then(data => setComments(data))
         }
     }, [])
-
-    console.log(comments)
 
     return (
         <div>

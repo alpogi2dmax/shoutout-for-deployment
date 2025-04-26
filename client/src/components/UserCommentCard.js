@@ -19,8 +19,6 @@ function UserCommentCard({comment, onUpdateComments}) {
 
     const formattedDate = `${month} ${day}, ${year}`
 
-    console.log(comment.likes)
-
     const handleLikeClick = () => {
         if ((comment.likes || []).map(x => x.comment_liker?.id).includes(user.id)) {
             const like = comment.likes.find(x => x.comment_liker.id === user.id)
@@ -41,7 +39,6 @@ function UserCommentCard({comment, onUpdateComments}) {
                 comment_liker_id: user.id,
                 liked_comment_id: comment.id
             }
-            console.log(values)
             fetch('https://shoutout-for-deployment.onrender.com/likes', {
                 method: 'POST',
                 headers: {

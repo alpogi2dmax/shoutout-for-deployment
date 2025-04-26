@@ -13,7 +13,6 @@ function UserPage() {
 
     const isFollowing = userPage && userPage.followers.map(follower => follower.id).includes(user.id)
 
-    // const [ userPage, setUser ] = useState('')
     const navigate = useNavigate()
 
     useEffect(() => {
