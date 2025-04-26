@@ -12,7 +12,7 @@ import UserSettingsReplies from "./components/UserSettingsReplies";
 import UserSettingsFollowers from "./components/UserSettingsFollowers";
 import UserSettingsFollowing from "./components/UserSettingsFollowing";
 import UserSettingsEdit from "./components/UserSettingsEdit";
-// import Explore from "./components/Explore";
+import Explore from "./components/Explore";
 
 const routes = [
     {
@@ -23,10 +23,10 @@ const routes = [
                 path: '/',
                 element: <Home />,
             },
-    //         {
-    //             path: '/explore',
-    //             element: <Explore />,
-    //         },
+            {
+                path: '/explore',
+                element: <Explore />,
+            },
             {
                 path: '/comments/:id',
                 element: <CommentPage />
