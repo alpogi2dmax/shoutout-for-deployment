@@ -32,7 +32,7 @@ function Explore() {
                 .catch((error) => {
                     console.error('Fetch error:', error);
                 });
-            fetch(`/comments/${search}`)
+            fetch(`https://shoutout-for-deployment.onrender.com/comments/${search}`)
                 .then((r) => {
                     if (!r.ok) throw new Error('Network response was not ok');
                     return r.json();
