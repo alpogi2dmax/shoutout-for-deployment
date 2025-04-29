@@ -24,13 +24,6 @@ function UserPageFollowingCard({followedUserPage}) {
         })
         .then((r) => r.json())
         .then(() => {
-            // const newFollower = {
-            //     id: user.id,
-            //     first_name: user.first_name,
-            //     last_name: user.last_name,
-            //     profile_pic: user.profile_pic,
-            //     username: user.username
-            // }
             const newFollowed = {
                 id: followedUserPage.id,
                 first_name: followedUserPage.first_name,
@@ -38,13 +31,7 @@ function UserPageFollowingCard({followedUserPage}) {
                 profile_pic: followedUserPage.profile_pic,
                 username: followedUserPage.username
             }
-            // const updatedUserPage = {
-            //     ...userPage,
-            //     followers: [...userPage.followers, newFollower]
-            // }
             const updatedFollowed = [newFollowed, ...followed]
-
-            // updateUserPage(updatedUserPage)
             setFollowed(updatedFollowed)
         })
     }
@@ -62,14 +49,7 @@ function UserPageFollowingCard({followedUserPage}) {
             body: JSON.stringify(follow)
         })
         .then(() => {
-            // const updatedFollowers = userPage.followers.filter(follower => follower.id !== user.id)
-            // const updatedUserPage = {
-            //     ...userPage,
-            //     followers: updatedFollowers
-            // }
             const updatedFollowed = followed.filter(followed => followed.id !== followedUserPage.id)
-            
-            // updateUserPage(updatedUserPage)
             setFollowed(updatedFollowed)
         })
     }

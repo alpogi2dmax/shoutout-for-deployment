@@ -13,8 +13,6 @@ function UserSettings() {
         navigate('/user-settings/user-comments');
     }, [user, navigate]);
 
-    console.log(user)
-
 
     if (!user) {return <div>Loading...</div>}
 
